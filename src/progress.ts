@@ -1,9 +1,13 @@
-
-//const readline = require('readline');
 const numeral = require('numeral');
 import * as chalk from 'chalk';
 import * as moment from 'moment';
 import * as readline from 'readline';
+
+interface ColorScheme{
+    titleColor: Function,
+    itemTitleColor: Function,
+    itemColor: Function;
+}
 
 class Progress{
     private _start: any;
@@ -15,13 +19,16 @@ class Progress{
     private _color = chalk.cyan.bold;
     private _colorItem = chalk.white.bold;
 
-    constructor(private _message: string, private _items: string[]){
+    private _colorScheme: ColorScheme = <ColorScheme>{};
+
+    constructor(private _title: string, private _items: string[]){
         this._progressChunk = 100/_items.length;
         this.startProgress();
     }
 
     private startProgress(){
-        console.log(this._colorItem('\r\n' + this._message));
+        if(this._title) console.log(this._colorItem(this._title));
+
         this._start = moment();
         this.write();
     }
@@ -40,46 +47,50 @@ class Progress{
         this._progress = 100;
         this._done = true;
         this.write();
+        console.log();
     }
 
     private write(){
         readline.clearLine(process.stdout, 0);
         readline.cursorTo(process.stdout, 0, null);
 
-        var now: any = moment();
 
-        var memory = numeral(process.memoryUsage().rss/1024/1024).format('0.00') + 'M';
-        var padM = '       ';
-        memory = (padM + memory).slice(-padM.length);
-
-        this.writeItem('memory', memory);
-
-        //process.stdout.write(this._color('memory: ').toString() + this._colorItem(memory).toString());
-        //process.stdout.write(' | ');
-
-        var elapsed = numeral((now - this._start)/1000).format('0.000') + 's';
-        var padE = '          ';
-        elapsed = (padE + elapsed).slice(-padE.length);
-
-        this.writeItem('elapsed', elapsed);
-        //process.stdout.write(this._color('elapsed: ').toString() + this._colorItem(elapsed).toString());
-        //process.stdout.write(' | ');
+        this.writeMemory();
+        this.writeElapsed();
 
         var processing = this._current !== this._items.length -1 || !this._done ? this._items[this._current] : '----------';
-        var padP = '          ';
-        processing = (padP + processing).slice(-padP.length);
 
-        this.writeItem('processing', processing);
-        //process.stdout.write(this._color('processing: ').toString() + this._colorItem(processing).toString());
-        //process.stdout.write(' | ');
+        this.writeItem('processing', processing, 5);
 
-        process.stdout.write(this._colorItem(numeral(this._progress).format('0') + ' %').toString());
-
+        process.stdout.write(this._colorItem(`${numeral(this._progress).format('0')}%`));
     }
 
-    private writeItem(name: string, value: any){
-        process.stdout.write(this._color(name + ': ').toString() + this._colorItem(value).toString());
+    private writeElapsed(){
+        var now: any = moment();
+        var elapsed = numeral((now - this._start)/1000).format('0.0') + 's';
+        this.writeItem('elapsed', elapsed, 6);
+    }
+
+    private writeMemory(){
+        var memory = numeral(process.memoryUsage().rss/1024/1024).format('0.0') + 'M';
+        this.writeItem('memory', memory, 6);
+    }
+
+    private writeItem(name: string, value: any, length: number = 0){
+        var pad = new Array(length + 1).join(' ');
+        value = (pad + value).slice(-pad.length);
+        process.stdout.write(String.prototype.concat(this._color(`${name}: `),this._colorItem(value)));
         process.stdout.write(' | ');
     }
 
+    private createDefaultColorScheme(): ColorScheme{
+        return {
+            titleColor: String.prototype.toString,
+            itemTitleColor: String.prototype.toString,
+            itemColor: String.prototype.toString
+        };
+    }
+
 }
+
+export {Progress}

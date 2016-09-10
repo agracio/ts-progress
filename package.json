@@ -1,10 +1,12 @@
 {
   "name": "ts-progress",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Node progress bar written in TypeScript",
   "main": "progress.js",
   "scripts": {
-    "test": "gulp test"
+    "build": "gulp build",
+    "test": "gulp test",
+    "ci": "gulp ci"
   },
   "repository": {
     "type": "git",
@@ -12,7 +14,8 @@
   },
   "keywords": [
     "node-progress",
-    "node",
+    "node progress bar",
+    "progress bar",
     "progress",
     "bar",
     "progress-bar",
@@ -33,7 +36,7 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-mocha": "^3.0.1",
-    "gulp-tsb": "^1.10.1",
+    "gulp-tsb": "1.10.1",
     "typescript": "^1.8.10"
   }
 }
