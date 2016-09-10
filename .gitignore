@@ -1,0 +1,7 @@
+node_modules/
+src/**/*.js
+src/**/*.map
+tests/**/*.js
+tests/**/*.map
+build/
+.idea/workspace.xml
