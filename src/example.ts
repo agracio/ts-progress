@@ -1,40 +1,49 @@
 import {Progress} from './progress';
-//var charm = require('charm')();
+
+var charm = require('charm')();
 //charm.pipe(process.stdout);
-//charm.reset();
 
 function test(){
     var count = 0;
-    var items = ['a', 'b', 'c', 'd', 'f'];
-    var progress = new Progress('title 1', items);
-    var interval = setInterval(function () {
+    var items = 100;
+    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {time.elapsed} | Remaining: {time.remaining} | {percent} | ');
+    var interval: any = setInterval(function () {
         count++;
         progress.update();
-        if(count == items.length){
-            stop(interval);
-            test2();
+        if(count == items){
+            clearInterval(interval);
         }
-    }, 100);
+    }, 10);
+
+    progress.start();
 
 }
 
-function test2(){
-    //console.log(chalk.reset('a'));
-    var count = 0;
-    var items = ['aaa', 'bbb', 'ccc', 'ddd', 'fff'];
-    var progress = new Progress('title 2', items);
-    var interval = setInterval(function () {
-        count++;
-        progress.update();
-        if(count == items.length){
-            stop(interval);
-        }
-    }, 100);
+function testCharm(){
+    console.log(new Date().getTime());
+    charm.write("\n");
 
-}
+    var current = 2;
+    var total = 10;
+    var size = 25;
+    charm.erase('line').write("\r");
 
-function stop(interval){
-    clearInterval(interval);
+    charm.display('bright').write('Processing: ');
+    charm.foreground('green').background('green');
+    for (var i = 0; i < ((current / total) * size) - 1 ; i++) {
+        //for (var i = 0; i < 20 ; i++) {
+        charm.write(' ');
+    }
+    charm.foreground('white').background('white');
+    while (i < size - 1) {
+        charm.write(' ');
+        i++;
+    }
+
+    charm.display('reset').down(1).left(500);
+
+    charm.write(Math.ceil((new Date().getTime()/ 1000) % 60).toString());
+    //console.log(Math.ceil((new Date().getTime()/ 1000) % 60))
 }
 
 test();
