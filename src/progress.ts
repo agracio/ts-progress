@@ -113,7 +113,7 @@ class Progress{
     }
 
     private createPercent(){
-        charm.write(this.pad(`${numeral(this._progress).format('0')}%`)); 
+        charm.write(this.pad(`${numeral(this._progress).format('0')}%`));
     }
 
     private createItemCurrent(){
