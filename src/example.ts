@@ -5,15 +5,16 @@ var charm = require('charm')();
 
 function test(){
     var count = 0;
-    var items = 100;
-    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {time.elapsed} | Remaining: {time.remaining} | {percent} | ');
+    var items = 50;
+    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {time.elapsed} | Remaining: {time.remaining} | {percent} | {item.current}/{item.total}', 'title');
     var interval: any = setInterval(function () {
         count++;
         progress.update();
         if(count == items){
             clearInterval(interval);
+            console.log('done')
         }
-    }, 10);
+    }, 3000);
 
     progress.start();
 
