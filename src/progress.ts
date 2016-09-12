@@ -1,44 +1,36 @@
 const numeral = require('numeral');
-import * as chalk from 'chalk';
-import * as readline from 'readline';
 var charm = require('charm')();
 charm.pipe(process.stdout);
 
+/**
+ * Object holding the key-value pairs.
+ * @type {Object}
+ * @private
+ */
+
 class Progress{
-    private _start: any;
-    private _progress: number = 0;
-    private _progressChunk: number = 0;
-    private _current: number = 0;
-    private _done: boolean = false;
 
     private _barSize: number = 20;
 
+    private _start: any;
+    private _percent: number = 0;
+    private _percentIncrease: number = 0;
+    private _current: number = 0;
+    private _now: number = 0;
 
     private _padding: string;
 
     private _processing: string;
 
-    private _patternMapping: any = {
-        '{bar}': this.createBar.bind(this),
-        '{time.elapsed}': this.createElapsed.bind(this),
-        '{time.remaining}': this.createRemaining.bind(this),
-        '{memory}': this.createMemory.bind(this),
-        '{percent}': this.createPercent.bind(this),
-        '{item.current}': this.createItemCurrent.bind(this),
-        '{item.total}': this.createItemTotal.bind(this),
-        '{processing}': this.createProcessing.bind(this),
-    };
-
-    constructor(private _items: number, private _pattern: string = 'Progress: {bar} | Elapsed: {time.elapsed} | Remaining: {time.remaining}', private _title?: string){
-        this._progressChunk = 100/_items;
-        this._padding = new Array(this._barSize * 2).join(' ');
-        //process.stdout.write('sdhgsdhsdhdshdsh')
+    constructor(private _items: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string){
+        this._padding = new Array(300).join(' ');
+        this._percentIncrease = 100/_items;
     }
 
     public start(processing?: string){
-        charm.write("\n\n");
         this._start = new Date().getTime();
         this._processing = processing;
+        this.renderTitle();
         this.write();
     }
 
@@ -48,111 +40,131 @@ class Progress{
             this.stop();
         }else{
             this._current++;
-            this._progress = this._progress + this._progressChunk;
+            this._percent = this._percent + this._percentIncrease;
             this.write();
         }
     }
 
-    private stop(){
-        this._progress = 100;
+    private stop = () =>{
+        this._percent = 100;
         this._current++;
-        this._done = true;
         this.write();
         charm.write("\n");
-        charm.display('reset').down(1).left(100);
-    }
+    };
 
-    private write(){
-        this.clear();
-        var now: any = new Date().getTime();
+    private write = () =>{
+        charm.erase('line').write("\r");
+        this._now = new Date().getTime();
 
-        this.createTitle();
-
-        var regex = /(.*?)({.*?})/g;
+        var regex = /(.*?){(.*?)}/g;
         var match;
         while (match = regex.exec(this._pattern)) {
-            charm.display('bright').write(match[1]);
-            charm.display('reset');
-            var itemFunction = this._patternMapping[match[2]];
-            if(itemFunction) {
-                itemFunction(now);
+
+            charm.display('bright').write(match[1]).display('reset');
+
+            if(match[2].indexOf('.') == -1){
+                this.renderPattern(match[2], match[2]);
             }else{
-                charm.write(match[2]);
+                var tokens = match[2].split('.');
+                if(tokens.length == 4 && tokens[0] === 'bar'){
+                    this.renderBar(tokens[1], tokens[2], tokens[3])
+                }else if(tokens.length == 2){
+                    this.renderPattern(match[2], tokens[0], tokens[1]);
+                }
+
             }
         }
+    };
 
-        charm.display('reset').down(2).left(100);
-    }
+    private renderElapsed = (color?: string) => {
+        this.renderItem(numeral(((this._now - this._start)/1000)).format('0.0') + 's', color);
+    };
 
-    private createTitle(){
-        if(this._title) {
-            charm.display('bright').write(this._title);
-            charm.display('reset').down(1).left(100);
-            //charm.write("\n\n");
-        }
-    }
-
-    private createElapsed(now){
-        charm.write(this.pad(numeral(((now - this._start)/1000)).format('0.0') + 's'));
-    }
-
-    private createRemaining(now){
-        var str: string = this.pad('NaN', 6);
+    private renderRemaining = (color?: string) => {
+        var item: string = 'N/A';
         if(this._current != 0){
-            var elapsed = ((now - this._start)/1000);
+            var elapsed = ((this._now - this._start)/1000);
             var remaining  = (elapsed/this._current * (this._items - this._current));
-            str = this.pad(numeral(remaining).format('0.0') + 's');
+            item = numeral(remaining).format('0.0') + 's';
         }
 
-        charm.write(str);
+        this.renderItem(item, color);
+    };
 
-    }
+    private renderMemory = (color?: string) => {
+        this.renderItem(numeral(process.memoryUsage().rss/1024/1024).format('0.0') + 'M', color);
+    };
 
-    private createMemory(){
-        charm.write(this.pad(numeral(process.memoryUsage().rss/1024/1024).format('0.0') + 'M'));
-    }
+    private renderPercent = (color?: string) => {
+        this.renderItem(`${numeral(this._percent).format('0')}%`, color);
+    };
 
-    private createPercent(){
-        charm.write(this.pad(`${numeral(this._progress).format('0')}%`));
-    }
+    private renderCurrent = (color?: string) => {
+        this.renderItem(this._current.toString(), color);
+    };
 
-    private createItemCurrent(){
-        charm.write(this.pad(this._current.toString()));
-    }
+    private renderTotal = (color?: string) => {
+        this.renderItem(this._items.toString(), color);
+    };
 
-    private createItemTotal(){
-        charm.write(this.pad(this._items.toString()));
-    }
+    private renderProcessing = (color?: string) => {
+        this.renderItem(this._processing, color);
+    };
 
-    private createProcessing(){
-        charm.write(this.pad(this._processing));
-    }
+    private renderBar = (colorRemaining: string | number = 'white', colorDone: string | number = 'green', size?: number) => {
 
-    private createBar(){
-        charm.foreground('green').background('green');
+        if(size && size !== this._barSize) this._barSize = size;
+        //console.log(size);
+        charm.foreground(colorDone).background(colorDone);
         var done = Math.ceil(((this._current / this._items) * this._barSize));
 
         charm.write(this._padding.substr(0, done));
 
-        charm.foreground('white').background('white');
+        charm.foreground(colorRemaining).background(colorRemaining);
         charm.write(this._padding.substr(0, this._barSize - done));
         charm.display('reset');
-    }
+    };
 
-    private clear(){
-        // readline.clearLine(process.stdout, 0);
-        // readline.cursorTo(process.stdout, 0, null);
-        charm.erase('line').up(1).erase('line').write("\r");
-    }
+    private _patternMapping: any = {
+        'bar': this.renderBar.bind(this),
+        'elapsed': this.renderElapsed,
+        'remaining': this.renderRemaining,
+        'memory': this.renderMemory.bind(this),
+        'percent': this.renderPercent.bind(this),
+        'current': this.renderCurrent.bind(this),
+        'total': this.renderTotal.bind(this),
+        'processing': this.renderProcessing.bind(this)
+    };
 
-    private pad(value: string, length: number = 0){
-        var pad = new Array(length + 1).join(' ');
-        return (pad + value).slice(-pad.length);
-    }
+    private renderPattern = (pattern: string, item: string, color?: string) => {
+        var renderer = this._patternMapping[item];
+        if(renderer) {
+            renderer(color);
+        }else{
+            charm.write(pattern);
+        }
+    };
 
-    private format(value: number, format: string){
+    private renderItem = (item: string, color?: string) => {
+        if(color) charm.foreground(color).write(item).display('reset'); else charm.write(item);
+    };
 
-    }
+    private renderTitle = (color?: string) => {
+        if(this._title) {
+            charm.display('bright').write(this._title).display('reset');
+            charm.write("\n");
+        }
+    };
+
+    // private pad(value: string, length: number = 0){
+    //     var pad = new Array(length + 1).join(' ');
+    //     return (pad + value).slice(-pad.length);
+    // };
+
+    // private format(value: number, format: string){
+    //
+    // };
+
 
 }
 

@@ -3,48 +3,44 @@ import {Progress} from './progress';
 var charm = require('charm')();
 //charm.pipe(process.stdout);
 
-function test(){
+var items = 5;
+var interval = 150;
+
+function withDefaultSettings(){
+    var progress = new Progress(items);
+    run(progress, withPattern);
+}
+function withPattern(){
+    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {elapsed} | Remaining: {remaining} | {percent} | {current}/{total}', 'Progress bar with pattern and title');
+    run(progress, withPatternAndColors);
+
+}
+
+function withPatternAndColors(){
+    var progress = new Progress(items, 'Progress: {bar.white.yellow.25} | Elapsed: {elapsed.green} | Remaining: {remaining} | {percent.red} | {current}/{total}', 'Progress bar with pattern, colors and title');
+    run(progress);
+}
+
+function run(progress: Progress, continueWith?: Function){
+    progress.start();
     var count = 0;
-    var items = 50;
-    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {time.elapsed} | Remaining: {time.remaining} | {percent} | {item.current}/{item.total}', 'title');
-    var interval: any = setInterval(function () {
+    var iv: any = setInterval(function () {
         count++;
         progress.update();
         if(count == items){
-            clearInterval(interval);
-            console.log('done')
+            clearInterval(iv);
+            console.log();
+            if(continueWith) continueWith();
         }
-    }, 3000);
-
-    progress.start();
+    }, interval);
 
 }
 
-function testCharm(){
-    console.log(new Date().getTime());
-    charm.write("\n");
-
-    var current = 2;
-    var total = 10;
-    var size = 25;
-    charm.erase('line').write("\r");
-
-    charm.display('bright').write('Processing: ');
-    charm.foreground('green').background('green');
-    for (var i = 0; i < ((current / total) * size) - 1 ; i++) {
-        //for (var i = 0; i < 20 ; i++) {
-        charm.write(' ');
-    }
-    charm.foreground('white').background('white');
-    while (i < size - 1) {
-        charm.write(' ');
-        i++;
-    }
-
-    charm.display('reset').down(1).left(500);
-
-    charm.write(Math.ceil((new Date().getTime()/ 1000) % 60).toString());
-    //console.log(Math.ceil((new Date().getTime()/ 1000) % 60))
+function logStart(message: string){
+    console.log();
+    console.log('----------------------------------------------------------------');
+    console.log(`${message}. `);
+    console.log(`items: ${items}, update interval: ${interval}ms`);
 }
 
-test();
+withDefaultSettings();

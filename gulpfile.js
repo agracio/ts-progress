@@ -21,7 +21,8 @@ function createCompilation(){
         outDir: paths.out,
         sourceMap: true,
         declaration: false,
-        noEmitOnError: false
+        noEmitOnError: false,
+        removeComments: false
     }, false, null, function(error){handleBuildError(error)});
 }
 
