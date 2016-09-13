@@ -1,8 +1,5 @@
 import {Progress} from './progress';
 
-var charm = require('charm')();
-//charm.pipe(process.stdout);
-
 var items = 5;
 var interval = 150;
 

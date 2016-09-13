@@ -111,7 +111,7 @@ class Progress{
         this.renderItem(this._processing, color);
     };
 
-    private renderBar = (colorRemaining: string | number = 'white', colorDone: string | number = 'green', size?: number) => {
+    private renderBar = (colorRemaining: string = 'white', colorDone: string = 'green', size?: number) => {
 
         if(size && size !== this._barSize) this._barSize = size;
         //console.log(size);
@@ -126,14 +126,14 @@ class Progress{
     };
 
     private _patternMapping: any = {
-        'bar': this.renderBar.bind(this),
+        'bar': this.renderBar,
         'elapsed': this.renderElapsed,
         'remaining': this.renderRemaining,
-        'memory': this.renderMemory.bind(this),
-        'percent': this.renderPercent.bind(this),
-        'current': this.renderCurrent.bind(this),
-        'total': this.renderTotal.bind(this),
-        'processing': this.renderProcessing.bind(this)
+        'memory': this.renderMemory,
+        'percent': this.renderPercent,
+        'current': this.renderCurrent,
+        'total': this.renderTotal,
+        'processing': this.renderProcessing
     };
 
     private renderPattern = (pattern: string, item: string, color?: string) => {
