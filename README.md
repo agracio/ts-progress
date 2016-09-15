@@ -14,10 +14,11 @@ npm install ts-progress
  ```javascript
 var Progress = require('ts-progress');
 
-var total = 50;
+var total = 50, count = 0;
+
 var progress = new Progress(total);
 progress.start();
-var count = 0;
+
 var iv = setInterval(function () {
     count++;
     progress.update();
@@ -28,7 +29,7 @@ var iv = setInterval(function () {
  ```
  
 ## Options
-Status accepts the following config options on `start()`:
+Progress bar accepts the following options on initialisation:
 * `total` - Total number of items to process.
 * `pattern` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'.
 * `title` - Optional title to display above progress bar.
