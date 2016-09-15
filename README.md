@@ -2,20 +2,20 @@
 
 > Flexible node progress bar
 
-![image](./screenshot.png)
+![image](https://github.com/agracio/ts-progress/raw/master/screenshot.png)
  
 ## Installation
 ```bash
- npm install ts-progress
- ```
+npm install ts-progress
+```
  
 ## Quickstart
  
  ```javascript
 var Progress = require('ts-progress');
 
-var items = 50;
-var progress = new Progress(items);
+var total = 50;
+var progress = new Progress(total);
 progress.start();
 var count = 0;
 var iv = setInterval(function () {
@@ -26,4 +26,18 @@ var iv = setInterval(function () {
     }
 }, 150);
  ```
-## options
+ 
+## Options
+Status accepts the following config options on `start()`:
+* `total` - Total number of items to process.
+* `pattern` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'.
+* `title` - Optional title to display above progress bar.
+* `updateFrequency` - Optional update frequency limit in milliseconds, defaults to *150*. See [Update frequency](#Update frequency). 
+
+```javascript
+var progress = new Progress(100, 'Progress: {bar} | Remaining: {remaining} | {percent} ', 'Awaiting results...');
+```
+
+## Update frequency
+Update frequency limit.
+[//]: <> Limits update frequency of the progress bar to prevent screen flickering and to avoid unnecessary compute.

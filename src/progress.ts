@@ -22,10 +22,10 @@ class Progress{
 
     private _padding: string;
 
-    constructor(private _items: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string, private _updateFrequency = 100){
+    constructor(private _total: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string, private _updateFrequency = 100){
         this._padding = new Array(300).join(' ');
         //this._padding = new Array(300).join('▒');
-        this._percentIncrease = 100/_items;
+        this._percentIncrease = 100/_total;
     }
 
     public start(){
@@ -38,7 +38,7 @@ class Progress{
 
     public update(){
         this._now = new Date().getTime();
-        if(this._current === this._items - 1){
+        if(this._current === this._total - 1){
             this.stop();
         }else{
             this._current++;
@@ -86,7 +86,7 @@ class Progress{
         var item: string = 'N/A';
         if(this._current != 0){
             var elapsed = ((this._now - this._start)/1000);
-            var remaining  = (elapsed/this._current * (this._items - this._current));
+            var remaining  = (elapsed/this._current * (this._total - this._current));
             item = numeral(remaining).format('0.0') + 's';
         }
 
@@ -106,14 +106,14 @@ class Progress{
     };
 
     private renderTotal = (color?: string) => {
-        this.renderItem(this._items.toString(), color);
+        this.renderItem(this._total.toString(), color);
     };
 
     private renderBar = (colorRemaining: string = 'white', colorDone: string = 'green', size?: number) => {
 
         if(size && size !== this._barSize) this._barSize = size;
         charm.foreground(colorDone).background(colorDone);
-        var done = Math.ceil(((this._current / this._items) * this._barSize));
+        var done = Math.ceil(((this._current / this._total) * this._barSize));
 
         charm.write(this._padding.substr(0, done));
 

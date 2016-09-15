@@ -32,5 +32,4 @@ function run(progress: Progress, continueWith?: Function){
     }, interval);
 
 }
-console.log();
 withDefaultSettings();
