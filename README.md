@@ -32,12 +32,12 @@ Status accepts the following config options on `start()`:
 * `total` - Total number of items to process.
 * `pattern` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'.
 * `title` - Optional title to display above progress bar.
-* `updateFrequency` - Optional update frequency limit in milliseconds, defaults to *150*. See [Update frequency](#Update frequency). 
+* `updateFrequency` - Optional update frequency limit in milliseconds, defaults to *100*. See [Update frequency](#Update frequency). 
 
 ```javascript
-var progress = new Progress(100, 'Progress: {bar} | Remaining: {remaining} | {percent} ', 'Awaiting results...');
+var progress = new Progress(50, 'Progress: {bar} | Remaining: {remaining} | {percent} ', 'Awaiting results...');
 ```
 
 ## Update frequency
 Update frequency limit.
-[//]: <> Limits update frequency of the progress bar to prevent screen flickering and to avoid unnecessary compute.
+
