@@ -21,7 +21,7 @@ var count = 0;
 var iv = setInterval(function () {
     count++;
     progress.update();
-    if (count == items) {
+    if (count == total) {
         clearInterval(iv);
     }
 }, 150);
