@@ -1,6 +1,6 @@
 import {Progress} from './progress';
 
-var items = 5;
+var items = 10;
 var interval = 150;
 
 function withDefaultSettings(){
@@ -14,7 +14,7 @@ function withPattern(){
 }
 
 function withPatternAndColors(){
-    var progress = new Progress(items, 'Progress: {bar.white.yellow.25} | Elapsed: {elapsed.green} | Remaining: {remaining} | {percent.red} | {current}/{total}', 'Progress bar with pattern, colors and title');
+    var progress = new Progress(items, 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}', 'Progress bar with pattern, title and colors');
     run(progress);
 }
 
@@ -31,13 +31,6 @@ function run(progress: Progress, continueWith?: Function){
         }
     }, interval);
 
-}
-
-function logStart(message: string){
-    console.log();
-    console.log('----------------------------------------------------------------');
-    console.log(`${message}. `);
-    console.log(`items: ${items}, update interval: ${interval}ms`);
 }
 
 withDefaultSettings();

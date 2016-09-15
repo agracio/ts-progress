@@ -11,37 +11,40 @@ charm.pipe(process.stdout);
 class Progress{
 
     private _barSize: number = 20;
+    //private _frequencyThreshold = 50;
 
     private _start: any;
     private _percent: number = 0;
     private _percentIncrease: number = 0;
     private _current: number = 0;
     private _now: number = 0;
+    private _cycle: number = 0;
 
     private _padding: string;
 
-    private _processing: string;
-
-    constructor(private _items: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string){
+    constructor(private _items: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string, private _updateFrequency = 100){
         this._padding = new Array(300).join(' ');
+        //this._padding = new Array(300).join('▒');
         this._percentIncrease = 100/_items;
     }
 
-    public start(processing?: string){
+    public start(){
         this._start = new Date().getTime();
-        this._processing = processing;
+        this._now = new Date().getTime();
+        this._cycle = this._start;
         this.renderTitle();
         this.write();
     }
 
-    public update(processing?: string){
-        this._processing = processing;
+    public update(){
+        this._now = new Date().getTime();
         if(this._current === this._items - 1){
             this.stop();
         }else{
             this._current++;
             this._percent = this._percent + this._percentIncrease;
-            this.write();
+            if(!this.skipStep())
+                this.write();
         }
     }
 
@@ -54,7 +57,6 @@ class Progress{
 
     private write = () =>{
         charm.erase('line').write("\r");
-        this._now = new Date().getTime();
 
         var regex = /(.*?){(.*?)}/g;
         var match;
@@ -107,14 +109,9 @@ class Progress{
         this.renderItem(this._items.toString(), color);
     };
 
-    private renderProcessing = (color?: string) => {
-        this.renderItem(this._processing, color);
-    };
-
     private renderBar = (colorRemaining: string = 'white', colorDone: string = 'green', size?: number) => {
 
         if(size && size !== this._barSize) this._barSize = size;
-        //console.log(size);
         charm.foreground(colorDone).background(colorDone);
         var done = Math.ceil(((this._current / this._items) * this._barSize));
 
@@ -133,7 +130,6 @@ class Progress{
         'percent': this.renderPercent,
         'current': this.renderCurrent,
         'total': this.renderTotal,
-        'processing': this.renderProcessing
     };
 
     private renderPattern = (pattern: string, item: string, color?: string) => {
@@ -149,23 +145,25 @@ class Progress{
         if(color) charm.foreground(color).write(item).display('reset'); else charm.write(item);
     };
 
-    private renderTitle = (color?: string) => {
-        if(this._title) {
+    private renderTitle = () => {
+        if(this._title && this._title !== '') {
             charm.display('bright').write(this._title).display('reset');
             charm.write("\n");
         }
     };
 
-    // private pad(value: string, length: number = 0){
-    //     var pad = new Array(length + 1).join(' ');
-    //     return (pad + value).slice(-pad.length);
-    // };
+    private skipStep(): boolean{
+        var elapsed = this._now - this._cycle;
 
-    // private format(value: number, format: string){
-    //
-    // };
-
-
+        if(elapsed < this._updateFrequency){
+            return true;
+        }else{
+            this._cycle = this._now;
+            return false;
+        }
+    }
 }
 
 export {Progress}
+
+module.exports = this;
