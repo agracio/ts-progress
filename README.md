@@ -29,7 +29,7 @@ var iv = setInterval(function () {
  ```
  
 ## Options
-Progress bar accepts the following options on initialisation:
+Progress bar accepts the following options on initialisation: 
 * `total` - Total number of items to process.
 * `pattern` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'.
 * `title` - Optional title to display above progress bar.
