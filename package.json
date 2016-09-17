@@ -1,11 +1,10 @@
 {
   "name": "ts-progress",
   "version": "0.0.1",
-  "description": "Node progress bar written in TypeScript",
+  "description": "Flexible node progress bar.",
   "main": "progress.js",
   "scripts": {
     "build": "gulp build",
-    "test": "gulp test",
     "ci": "gulp ci"
   },
   "repository": {
@@ -19,7 +18,8 @@
     "node-progress-bar",
     "progress bar",
     "progress",
-    "progress-bar"
+    "progress-bar",
+    "statusbar"
   ],
   "author": "Antonas Graciovas",
   "license": "MIT",
