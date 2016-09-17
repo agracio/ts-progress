@@ -22,7 +22,7 @@ class Progress{
 
     private _padding: string;
 
-    constructor(private _total: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _title?: string, private _updateFrequency = 100){
+    constructor(private _total: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _textColor?: string, private _title?: string, private _updateFrequency = 100){
         this._padding = new Array(300).join(' ');
         //this._padding = new Array(300).join('▒');
         this._percentIncrease = 100/_total;
@@ -62,7 +62,10 @@ class Progress{
         var match;
         while (match = regex.exec(this._pattern)) {
 
-            charm.display('bright').write(match[1]).display('reset');
+            if(this._textColor)
+                charm.display('bright').foreground(this._textColor).write(match[1]).display('reset');
+            else
+                charm.display('bright').write(match[1]).display('reset');
 
             if(match[2].indexOf('.') == -1){
                 this.renderPattern(match[2], match[2]);
