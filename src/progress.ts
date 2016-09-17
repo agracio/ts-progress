@@ -33,14 +33,7 @@ class Progress{
         if(pattern) this._pattern = pattern;
         //this._padding = new Array(300).join('▒');
         this._percentIncrease = 100/_total;
-    }
-
-    public start(){
-        this._start = new Date().getTime();
-        this._now = new Date().getTime();
-        this._cycle = this._start;
-        this.renderTitle();
-        this.write();
+        this.start();
     }
 
     public update(){
@@ -57,6 +50,15 @@ class Progress{
             }
         }
     }
+
+    private start = () =>{
+        this._start = new Date().getTime();
+        this._now = new Date().getTime();
+        this._cycle = this._start;
+        this.renderTitle();
+        this.write();
+        //this.update();
+    };
 
     private stop = () =>{
         this._current++;
@@ -94,12 +96,7 @@ class Progress{
     };
 
     private renderRemaining = (color?: string) => {
-        var item: string = 'N/A';
-        if(this._current != 0){
-            item = numeral(this._remaining).format('0.0') + 's';
-        }
-
-        this.renderItem(item, color);
+        this.renderItem(numeral(this._remaining).format('0.0') + 's', color);
     };
 
     private renderMemory = (color?: string) => {
