@@ -22,7 +22,7 @@ class Progress{
 
     private _padding: string;
 
-    constructor(private _total: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _textColor?: string, private _title?: string, private _updateFrequency = 100){
+    constructor(private _total: number, private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}', private _textColor?: string, private _title?: string, private _updateFrequency = 0){
         this._padding = new Array(300).join(' ');
         //this._padding = new Array(300).join('▒');
         this._percentIncrease = 100/_total;
@@ -156,6 +156,8 @@ class Progress{
     };
 
     private skipStep(): boolean{
+
+        if(this._updateFrequency == 0) return false;
         var elapsed = this._now - this._cycle;
 
         if(elapsed < this._updateFrequency){
