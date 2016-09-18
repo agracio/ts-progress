@@ -3,16 +3,24 @@ var del = require('del');
 var mocha = require('gulp-mocha');
 var tsb = require('gulp-tsb');
 var chalk = require('chalk');
+var run = require('gulp-run');
+var jeditor = require("gulp-json-editor");
+var bump = require('gulp-bump');
+var sequence = require('run-sequence');
 
 var buildDone = false;
 
 var paths = {
     src: ['src/**', 'test/**', './*.ts', 'typings/*.d.ts'],
-    out: './build',
-    test: './build/test/**/*.js'
+    out: './dist',
+    test: './dist/test/**/*.js',
+    publish: './publish'
 };
 
-var compilation = createCompilation();
+function handleBuildError (error) {
+    console.log(chalk.red(error.toString()));
+    buildDone = false;
+}
 
 function createCompilation(){
     return tsb.create({
@@ -24,12 +32,6 @@ function createCompilation(){
         noEmitOnError: false,
         removeComments: false
     }, false, null, function(error){handleBuildError(error)});
-}
-
-
-function handleBuildError (error) {
-    console.log(chalk.red(error.toString()));
-    buildDone = false;
 }
 
 function logBuildResult(){
@@ -56,11 +58,49 @@ gulp.task('test', ['build'], function() {
     }
 });
 
-gulp.task('clean', function() {
-    console.log(chalk.blue('Cleaning'));
-    return del([paths.out + '/**/*', paths.bundle + '/**/*']);
+gulp.task('package_clean', function() {
+    var clean = [paths.publish + '/**/*'];
+    console.log(chalk.blue('Cleaning ' + clean));
+    return del(clean);
+});
+
+gulp.task('cb', ['build'], function() {
+    return gulp.watch(paths.src, ['build']);
 });
 
 gulp.task('ci', ['test'], function() {
-    gulp.watch(paths.src, ['test']);
+    return gulp.watch(paths.src, ['test']);
 });
+
+gulp.task('package_definition', function() {
+    return gulp.src("./package.json")
+        .pipe(jeditor(function(json) {
+            json.devDependencies = "";
+            json.main = 'progress.js';
+            return json;
+        }))
+        .pipe(gulp.dest(paths.publish));
+});
+
+gulp.task('package_copy', function() {
+    return gulp.src([paths.out + '/**/*.js', './README.md']).pipe(gulp.dest(paths.publish));
+});
+
+gulp.task('package_npm', function() {
+    run('npm pack ' + paths.publish).exec();
+});
+
+gulp.task('package_bump', function() {
+    return gulp.src('./package.json')
+        .pipe(bump())
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('publish_pack', ['build', 'package_clean', 'package_copy'], function() {
+    run('npm pack ' + paths.publish).exec();
+});
+
+gulp.task('publish', function() {
+    sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_npm', 'package_bump');
+});
+

@@ -2,7 +2,7 @@
   "name": "ts-progress",
   "version": "0.0.1",
   "description": "Flexible node progress bar.",
-  "main": "progress.js",
+  "main": "src/progress.ts",
   "scripts": {
     "build": "gulp build",
     "ci": "gulp ci"
@@ -40,7 +40,6 @@
     "gulp-mocha": "^3.0.1",
     "gulp-run": "^1.7.1",
     "gulp-tsb": "1.10.1",
-    "merge2": "^1.0.2",
     "run-sequence": "^1.2.2",
     "typescript": "^1.8.10"
   }
