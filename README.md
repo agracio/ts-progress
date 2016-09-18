@@ -17,7 +17,6 @@ var Progress = require('ts-progress');
 var total = 50, count = 0;
 
 var progress = new Progress(total);
-progress.start();
 
 var iv = setInterval(function () {
     count++;
@@ -32,9 +31,9 @@ var iv = setInterval(function () {
 Progress bar accepts the following options on initialisation: 
 * `total: number` - Total number of items to process.
 * `pattern: string` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'. See [Patterns](#Patterns)
-* `textColor: string` - Optional text color. See [Colors](#Colors)
+* `textColor: string` - Optional text color. See [Colors](#colors)
 * `title: string` - Optional title to display above progress bar.
-* `updateFrequency: number` - Optional update frequency limit in milliseconds. See [Update frequency](#Update frequency).
+* `updateFrequency: number` - Optional update frequency limit in milliseconds. See [Update frequency](#update-frequency).
 
 ```javascript
 
@@ -48,13 +47,33 @@ var progress = new Progress(50, 'Progress: {bar} | Remaining: {remaining} | {per
 var progress = new Progress(50, 'Progress: {current}/{total} | Remaining: {remaining} | Elapsed: {elapsed} ', 'blue');
 
 //with default options and title
-var progress = new Progress(50, undefied, undefied, 'Waiting for results');
+var progress = new Progress(50, undefined, undefined, 'Waiting for results');
 
 ```
 
 ## Update frequency
-When set limits progress bar update rate. Used to limit refresh rate for quickly running tasks progress. Reduces resource allocation to progress bar and resolves display flickering issues.
- 
+When set limits progress bar update rate. Used to limit refresh rate for quickly running tasks progress.
+
+In the example below progress bar will only update every 150 milliseconds instead of updating 1000 times every millisecond. This will reduce resource allocation to progress bar. 
+
+ ```javascript
+var Progress = require('ts-progress');
+
+var total = 1000, count = 0;
+
+var progress = new Progress(total, undefined, undefined, undefined, 150);
+
+var iv = setInterval(function () {
+    count++;
+    progress.update();
+    if (count == total) {
+        clearInterval(iv);
+    }
+}, 1);
+ ```
+[](With large number of tasks can result in flickering and ineefctive resource allocation.)
+[]( Update freq can be used to limit refresh rate for such tasks.)
+  
 ## Patterns
 The following tokens are supported: 
 
@@ -62,22 +81,22 @@ The following tokens are supported:
 * `{elapsed}` - elapsed time in seconds.
 * `{remaining}` - estimated remaining time in seconds.
 * `{percent}` - completion percentage
-* `{memory}` - process memory usage.
+* `{memory}` - process memory usage in megabytes.
 * `{current}` - current item.
 * `{total}` - total items.
 
 ### Token customisation
 Tokens can be customised to define color for each token. 
-Progress bar accepts two colors for remaining/done items as well as length.
+Progress bar  token accepts two colors for remaining/done items as well as length.
 
 Usage for all tokens except progress bar:
 * `{token.color}`
 
 Usage for progress bar:
-* `{bar.color.color.length}`
+* `{bar.color.color.length}` - default is *{bar.white.green.20}*
 
 ```javascript
-var progress = new Progress(50, 'Progress: {bar.white.green.20} | Remaining: {remaining.red} | {percent.blue}');
+var progress = new Progress(50, 'Progress: {bar.white.red.10} | Remaining: {remaining.red} | {percent.blue}');
 ```
 
 ## Colors
