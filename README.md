@@ -30,7 +30,7 @@ var iv = setInterval(function () {
 ## Options
 Progress bar accepts the following options on initialisation: 
 * `total: number` - Total number of items to process.
-* `pattern: string` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'. See [Patterns](#Patterns)
+* `pattern: string` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'. See [Patterns](#patterns)
 * `textColor: string` - Optional text color. See [Colors](#colors)
 * `title: string` - Optional title to display above progress bar.
 * `updateFrequency: number` - Optional update frequency limit in milliseconds. See [Update frequency](#update-frequency).
