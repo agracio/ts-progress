@@ -3,4 +3,5 @@ src/**/*.js
 src/**/*.map
 build/
 dist/
+publish/
 .idea/workspace.xml
