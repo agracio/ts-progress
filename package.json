@@ -39,7 +39,7 @@
     "gulp-json-editor": "^2.2.1",
     "gulp-mocha": "^3.0.1",
     "gulp-run": "^1.7.1",
-    "gulp-tsb": "1.10.1",
+    "gulp-tsb": "1.10.4",
     "run-sequence": "^1.2.2",
     "typescript": "^1.8.10"
   }
