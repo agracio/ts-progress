@@ -96,8 +96,12 @@ gulp.task('package_bump', function() {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('publish_pack', ['build', 'package_clean', 'package_copy'], function() {
+gulp.task('package_pack', function() {
     run('npm pack ' + paths.publish).exec();
+});
+
+gulp.task('publish_pack', function() {
+    sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_pack');
 });
 
 gulp.task('publish', function() {
