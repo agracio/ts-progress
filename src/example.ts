@@ -1,5 +1,6 @@
-import {Progress} from './progress';
+//import {Progress} from './progress';
 
+var Progress = require('./progress');
 var items = 10;
 var interval = 250;
 
@@ -19,7 +20,7 @@ function withPatternAndColors(){
     run(progress);
 }
 
-function run(progress: Progress, continueWith?: Function){
+function run(progress, continueWith?: Function){
     var count = 0;
     var iv: any = setInterval(function () {
         count++;

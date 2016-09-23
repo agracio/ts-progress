@@ -2,16 +2,9 @@ const numeral = require('numeral');
 var charm = require('charm')();
 charm.pipe(process.stdout);
 
-/**
- * Object holding the key-value pairs.
- * @type {Object}
- * @private
- */
-
 class Progress{
 
     private _barSize: number = 20;
-    //private _frequencyThreshold = 50;
 
     private _percent: number = 0;
     private _percentIncrease: number = 0;
@@ -57,7 +50,6 @@ class Progress{
         this._cycle = this._start;
         this.renderTitle();
         this.write();
-        //this.update();
     };
 
     private stop = () =>{
@@ -179,6 +171,5 @@ class Progress{
     }
 }
 
-export {Progress}
-
-module.exports = this;
+export {Progress};
+module.exports = Progress;
