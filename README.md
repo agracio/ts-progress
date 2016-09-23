@@ -71,9 +71,7 @@ var iv = setInterval(function () {
     }
 }, 1);
  ```
-[](With large number of tasks can result in flickering and ineefctive resource allocation.)
-[]( Update freq can be used to limit refresh rate for such tasks.)
-  
+ 
 ## Patterns
 The following tokens are supported: 
 
@@ -110,9 +108,6 @@ Progress bar uses [charm](https://www.npmjs.com/package/charm) to render element
 * `black`
 * `white`
 
-
-
-[](Comment text goes here)
 
 
 

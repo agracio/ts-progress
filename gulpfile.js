@@ -87,7 +87,7 @@ gulp.task('package_copy', function() {
 });
 
 gulp.task('package_npm', function() {
-    run('npm pack ' + paths.publish).exec();
+    run('npm publish ' + paths.publish).exec();
 });
 
 gulp.task('package_bump', function() {
