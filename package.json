@@ -1,6 +1,6 @@
 {
   "name": "ts-progress",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Flexible node progress bar.",
   "main": "src/progress.ts",
   "scripts": {
@@ -16,13 +16,20 @@
     "node progress",
     "node progress bar",
     "node-progress-bar",
-    "progress bar",
     "progress",
+    "progress bar",
     "progress-bar",
     "status bar",
     "statusbar",
+    "cli",
     "cli progress",
-    "cli progress"
+    "cli progress bar",
+    "terminal",
+    "terminal progress",
+    "terminal progress bar",
+    "console",
+    "console progress",
+    "console progress bar"
   ],
   "author": "Antonas Graciovas",
   "license": "MIT",
