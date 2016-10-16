@@ -1,22 +1,22 @@
-//import {Progress} from './progress';
+'use strict';
 
 var Progress = require('./progress');
 var items = 10;
-var interval = 250;
+var interval = 100;
 
 function withDefaultSettings(){
-    var progress = new Progress(items);
+    var progress = Progress.create({total: items});
     run(progress, withPattern);
 }
 
 function withPattern(){
-    var progress = new Progress(items, 'Progress: {bar} | Elapsed: {elapsed} | Remaining: {remaining} | {percent} | {current}/{total}');
+    var progress = Progress.create({total: items, pattern: 'Progress: {bar} | Elapsed: {elapsed} | Remaining: {remaining} | {percent} | {current}/{total}'});
     run(progress, withPatternAndColors);
 
 }
 
 function withPatternAndColors(){
-    var progress = new Progress(items, 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}');
+    var progress = Progress.create({total: items, pattern: 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}'});
     run(progress);
 }
 

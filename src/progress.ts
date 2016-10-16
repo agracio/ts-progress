@@ -1,4 +1,6 @@
-const numeral = require('numeral');
+'use strict';
+
+var numeral = require('numeral');
 var charm = require('charm')();
 charm.pipe(process.stdout);
 
@@ -21,6 +23,19 @@ class Progress{
     private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}';
     private  _regex = /(.*?){(.*?)}/g;
 
+    /**
+     * Creates new progress bar object
+     * @param options
+     * @returns {Progress}
+     */
+    public static create(options: IProgressOptions): Progress{
+        return new Progress(options.total, options.pattern, options.textColor, options.title, options.updateFrequency | 0)
+    }
+
+    /**
+     *
+     * @deprecated use Process.create static function instead
+     */
     constructor(private _total: number, pattern?: string, private _textColor?: string, private _title?: string, private _updateFrequency = 0){
         this._padding = new Array(300).join(' ');
         if(pattern) this._pattern = pattern;
@@ -171,5 +186,6 @@ class Progress{
     }
 }
 
+//export = Progress
 export {Progress};
 module.exports = Progress;
