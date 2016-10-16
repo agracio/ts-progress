@@ -16,7 +16,7 @@ var Progress = require('ts-progress');
 
 var total = 50, count = 0;
 
-var progress = new Progress(total);
+var progress = Progress.create({total: total});
 
 var iv = setInterval(function () {
     count++;
@@ -38,16 +38,16 @@ Progress bar accepts the following options on initialisation:
 ```javascript
 
 // with default options
-var progress = new Progress(50);
+var progress = Progress.create({total: 50});
 
 // with pattern
-var progress = new Progress(50, 'Progress: {bar} | Remaining: {remaining} | {percent} ');
+var progress = Progress.create({total: 50, pattern: 'Progress: {bar} | Remaining: {remaining} | {percent} '});
 
 //with pattern and text color
-var progress = new Progress(50, 'Progress: {current}/{total} | Remaining: {remaining} | Elapsed: {elapsed} ', 'blue');
+var progress = Progress.create({total: 50, pattern: 'Progress: {current}/{total} | Remaining: {remaining} | Elapsed: {elapsed} ', textColor: 'blue'});
 
 //with default options and title
-var progress = new Progress(50, undefined, undefined, 'Waiting for results');
+var progress = Progress.create({total: 50, title: 'Waiting for results'});
 
 ```
 
@@ -61,7 +61,7 @@ var Progress = require('ts-progress');
 
 var total = 1000, count = 0;
 
-var progress = new Progress(total, undefined, undefined, undefined, 150);
+var progress = Progress.create({total: total, updateFrequency: 150});
 
 var iv = setInterval(function () {
     count++;
@@ -94,7 +94,7 @@ Usage for progress bar:
 * `{bar.color.color.length}` - default is *{bar.white.green.20}*
 
 ```javascript
-var progress = new Progress(50, 'Progress: {bar.white.red.10} | Remaining: {remaining.red} | {percent.blue}');
+var progress = new Progress({total:50, pattern: 'Progress: {bar.white.red.10} | Remaining: {remaining.red} | {percent.blue}'});
 ```
 
 ## Colors
