@@ -83,7 +83,7 @@ gulp.task('package_definition', function() {
 });
 
 gulp.task('package_copy', function() {
-    return gulp.src([paths.out + '/**/*.js', './README.md']).pipe(gulp.dest(paths.publish));
+    return gulp.src([paths.out + '/**/*.js', './README.md', './src/ts-progress.d.ts']).pipe(gulp.dest(paths.publish));
 });
 
 gulp.task('package_npm', function() {
