@@ -94,7 +94,7 @@ Usage for progress bar:
 * `{bar.color.color.length}` - default is *{bar.white.green.20}*
 
 ```javascript
-var progress = new Progress({total:50, pattern: 'Progress: {bar.white.red.10} | Remaining: {remaining.red} | {percent.blue}'});
+var progress = Progress.create({total:50, pattern: 'Progress: {bar.white.red.10} | Remaining: {remaining.red} | {percent.blue}'});
 ```
 
 ## Colors

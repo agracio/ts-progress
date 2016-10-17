@@ -34,7 +34,7 @@ class Progress{
 
     /**
      *
-     * @deprecated use Process.create static function instead
+     * @deprecated use Progress.create(options: IProgressOptions)
      */
     constructor(private _total: number, pattern?: string, private _textColor?: string, private _title?: string, private _updateFrequency = 0){
         this._padding = new Array(300).join(' ');

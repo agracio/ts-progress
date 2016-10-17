@@ -12,12 +12,12 @@ interface Progress{
 
 declare var progress: {
     /**
-     * @deprecated use create static function instead
+     * @deprecated use Progress.create(options: IProgressOptions)
      */
     new (total: number, pattern?: string, textColor?: string, title?: string, updateFrequency?: number): Progress;
     /**
      * Creates new progress bar object
-     * @param options
+     * @param options {IProgressOptions}
      * @returns {Progress}
      */
     create(options: IProgressOptions): Progress
