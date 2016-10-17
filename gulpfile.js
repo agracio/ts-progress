@@ -100,7 +100,7 @@ gulp.task('package_pack', function() {
     run('npm pack ' + paths.publish).exec();
 });
 
-gulp.task('publish_pack', function() {
+gulp.task('pack', function() {
     sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_pack');
 });
 
