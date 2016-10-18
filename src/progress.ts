@@ -1,6 +1,5 @@
 'use strict';
 
-var numeral = require('numeral');
 var charm = require('charm')();
 charm.pipe(process.stdout);
 
@@ -24,7 +23,7 @@ class Progress{
     private  _regex = /(.*?){(.*?)}/g;
 
     /**
-     * Creates new progress bar object
+     * Creates new progress object
      * @param options
      * @returns {Progress}
      */
@@ -99,19 +98,19 @@ class Progress{
     };
 
     private renderElapsed = (color?: string) => {
-        this.renderItem(numeral(this._elapsed).format('0.0') + 's', color);
+        this.renderItem(`${this._elapsed.toFixed(1)}s`, color);
     };
 
     private renderRemaining = (color?: string) => {
-        this.renderItem(numeral(this._remaining).format('0.0') + 's', color);
+        this.renderItem(`${this._remaining.toFixed(1)}s`, color);
     };
 
     private renderMemory = (color?: string) => {
-        this.renderItem(numeral(process.memoryUsage().rss/1024/1024).format('0.0') + 'M', color);
+        this.renderItem(`${(process.memoryUsage().rss/1024/1024).toFixed(1)}M`, color);
     };
 
     private renderPercent = (color?: string) => {
-        this.renderItem(`${numeral(this._percent).format('0')}%`, color);
+        this.renderItem(`${this._percent.toFixed(0)}%`, color);
     };
 
     private renderCurrent = (color?: string) => {

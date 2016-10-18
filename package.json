@@ -38,8 +38,7 @@
   },
   "homepage": "https://github.com/agracio/ts-progress#readme",
   "dependencies": {
-    "charm": "^1.0.1",
-    "numeral": "^1.5.3"
+    "charm": "^1.0.1"
   },
   "devDependencies": {
     "chalk": "^1.1.3",
