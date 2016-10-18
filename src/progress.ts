@@ -77,7 +77,6 @@ class Progress{
 
     private write = () =>{
         charm.erase('line').write("\r");
-
         var match;
         while (match = this._regex.exec(this._pattern)) {
 
@@ -158,10 +157,11 @@ class Progress{
     };
 
     private renderText = (text: string) =>{
-        if(this._textColor)
-        charm.display('bright').foreground(this._textColor).write(text).display('reset');
-        else
-        charm.display('bright').write(text).display('reset');
+        if(this._textColor){
+            charm.display('bright').foreground(this._textColor).write(text).display('reset');
+        }else{
+            charm.display('bright').write(text).display('reset');
+        }
     };
 
     private renderTitle = () => {
