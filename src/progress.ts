@@ -1,6 +1,6 @@
 'use strict';
 
-var charm = require('charm')();
+let charm = require('charm')();
 charm.pipe(process.stdout);
 
 class Progress{
@@ -45,6 +45,7 @@ class Progress{
 
     public update(){
         this._now = new Date().getTime();
+        charm.up(1).erase('line').write("\r");
         if(this._current === this._total - 1){
             this.stop();
         }else{
@@ -59,6 +60,7 @@ class Progress{
     }
 
     private start = () =>{
+        charm.erase('line').write("\r");
         this._start = new Date().getTime();
         this._now = new Date().getTime();
         this._cycle = this._start;
@@ -72,12 +74,12 @@ class Progress{
         this._elapsed = (this._now - this._start)/1000;
         this._remaining  = 0;
         this.write();
-        charm.write("\n");
     };
 
     private write = () =>{
-        charm.erase('line').write("\r");
-        var match;
+
+        //charm.up(1).erase('line').write("\r");
+        let match;
         while (match = this._regex.exec(this._pattern)) {
 
             this.renderText(match[1]);
@@ -85,8 +87,8 @@ class Progress{
             if(match[2].indexOf('.') == -1){
                 this.renderPattern(match[2], match[2]);
             }else{
-                var tokens = match[2].split('.');
-                if(tokens.length == 4 && tokens[0] === 'bar'){
+                let tokens = match[2].split('.');
+                if(tokens.length == 4 && tokens[0] == 'bar'){
                     this.renderBar(tokens[1], tokens[2], tokens[3])
                 }else if(tokens.length == 2){
                     this.renderPattern(match[2], tokens[0], tokens[1]);
@@ -94,6 +96,7 @@ class Progress{
 
             }
         }
+        charm.write("\r\n");
     };
 
     private renderElapsed = (color?: string) => {
@@ -124,7 +127,7 @@ class Progress{
 
         if(size && size !== this._barSize) this._barSize = size;
         charm.foreground(colorDone).background(colorDone);
-        var done = Math.ceil(((this._current / this._total) * this._barSize));
+        let done = Math.ceil(((this._current / this._total) * this._barSize));
 
         charm.write(this._padding.substr(0, done));
 
@@ -144,7 +147,7 @@ class Progress{
     };
 
     private renderPattern = (pattern: string, item: string, color?: string) => {
-        var renderer = this._patternMapping[item];
+        let renderer = this._patternMapping[item];
         if(renderer) {
             renderer(color);
         }else{
@@ -174,7 +177,7 @@ class Progress{
     private skipStep(): boolean{
 
         if(this._updateFrequency == 0) return false;
-        var elapsed = this._now - this._cycle;
+        let elapsed = this._now - this._cycle;
 
         if(elapsed < this._updateFrequency){
             return true;

@@ -1,6 +1,6 @@
 # ts-progress
 
-> Flexible node progress bar
+> Flexible node progress bar for Windows/macOS/Linux
 
 ![image](https://github.com/agracio/ts-progress/raw/master/screenshot.gif)
  
