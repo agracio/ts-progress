@@ -1,6 +1,6 @@
 {
   "name": "ts-progress",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
   "main": "src/progress.ts",
   "scripts": {
