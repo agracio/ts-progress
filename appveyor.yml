@@ -1,0 +1,21 @@
+environment:
+  matrix:
+    # node.js
+    - nodejs_version: "5"
+    - nodejs_version: "6"
+    - nodejs_version: "7"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install -g gulp
+  - npm install
+
+#build_script:
+#  - gulp build
+
+test_script:
+  - node --version
+  - npm --version
+  - npm test
+
+build: off
