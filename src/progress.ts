@@ -43,10 +43,14 @@ class Progress{
         this.start();
     }
 
+    /**
+     * Updates progress
+     */
     public update(){
         this._now = new Date().getTime();
         charm.up(1).erase('line').write("\r");
-        if(this._current === this._total - 1){
+        if(this._current >= this._total - 1){
+            this._current = (this._total - 1);
             this.stop();
         }else{
             this._current++;
@@ -57,6 +61,16 @@ class Progress{
                 this.write();
             }
         }
+    }
+
+    /**
+     * Finishes progress
+     */
+    public done(){
+        this._now = new Date().getTime();
+        charm.up(1).erase('line').write("\r");
+        this._current = (this._total - 1);
+        this.stop();
     }
 
     private start = () =>{

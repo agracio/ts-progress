@@ -26,6 +26,19 @@ var iv = setInterval(function () {
     }
 }, 150);
  ```
+## API
+
+### create(options)
+
+Creates and returns new progress bar.
+
+### update() 
+
+Updates progress. 
+
+### done()
+
+Finishes progress regardless of progress stage. Optional.
  
 ## Options
 Progress bar accepts the following options on initialisation: 

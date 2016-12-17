@@ -7,7 +7,15 @@ interface IProgressOptions{
 }
 
 interface Progress{
+    /**
+     * Updates progress
+     */
     update();
+
+    /**
+     * Finishes progress
+     */
+    done();
 }
 
 declare module "ts-progress"{
@@ -16,6 +24,7 @@ declare module "ts-progress"{
          * @deprecated use Progress.create(options: IProgressOptions)
          */
         new (total: number, pattern?: string, textColor?: string, title?: string, updateFrequency?: number): Progress;
+
         /**
          * Creates new progress bar object
          * @param options {IProgressOptions}
