@@ -1,11 +1,11 @@
 {
   "name": "ts-progress",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
   "main": "src/progress.ts",
   "scripts": {
     "build": "gulp build",
-    "ci": "gulp ci"
+    "test": "gulp build && node dist/example.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,9 @@
 # ts-progress
 
+[![Dependencies](https://david-dm.org/agracio/ts-progress.svg)](https://david-dm.org/agracio/ts-progress#info=dependencies)
+[![img](https://david-dm.org/agracio/ts-progress/dev-status.svg)](https://david-dm.org/agracio/ts-progress/#info=devDependencies)
+[![Downloads](https://img.shields.io/npm/dm/ts-progress.svg)](https://img.shields.io/npm/dm/ts-progress.svg)
+
 > Flexible node progress bar for Windows/macOS/Linux
 
 ![image](https://github.com/agracio/ts-progress/raw/master/screenshot.gif)
@@ -65,7 +69,7 @@ var progress = Progress.create({total: 50, title: 'Waiting for results'});
 ```
 
 ## Update frequency
-When set limits progress bar update rate. Used to limit refresh rate for quickly running tasks progress.
+When set limits progress bar update rate. Used to limit refresh rate for quickly running tasks.
 
 In the example below progress bar will only update every 150 milliseconds instead of updating 1000 times every millisecond. This will reduce resource allocation to progress bar. 
 
