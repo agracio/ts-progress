@@ -2,6 +2,7 @@
 
 [![Dependencies](https://david-dm.org/agracio/ts-progress.svg)](https://david-dm.org/agracio/ts-progress#info=dependencies)
 [![img](https://david-dm.org/agracio/ts-progress/dev-status.svg)](https://david-dm.org/agracio/ts-progress/#info=devDependencies)
+[![Known Vulnerabilities](https://snyk.io/test/github/agracio/ts-progress/badge.svg)](https://snyk.io/test/github/agracio/ts-progress)
 [![Downloads](https://img.shields.io/npm/dm/ts-progress.svg)](https://img.shields.io/npm/dm/ts-progress.svg)
 
 > Flexible node progress bar for Windows/macOS/Linux
