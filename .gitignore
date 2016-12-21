@@ -1,7 +1,7 @@
 node_modules/
 src/**/*.js
 src/**/*.map
-build/
-dist/
+lib/
+coverage/
 publish/
 .idea/workspace.xml

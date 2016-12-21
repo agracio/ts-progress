@@ -7,14 +7,17 @@ var run = require('gulp-run');
 var jeditor = require("gulp-json-editor");
 var bump = require('gulp-bump');
 var sequence = require('run-sequence');
+var istanbul = require('gulp-istanbul');
+var coveralls = require('gulp-coveralls');
 
 var buildDone = false;
 
 var paths = {
     src: ['src/**', 'test/**', './*.ts', 'typings/*.d.ts'],
-    out: './dist',
-    test: './dist/test/**/*.js',
-    publish: './publish'
+    out: './lib',
+    test: './lib/test/**/*.js',
+    publish: './publish',
+    coverage: './coverage',
 };
 
 function handleBuildError (error) {
@@ -23,15 +26,7 @@ function handleBuildError (error) {
 }
 
 function createCompilation(){
-    return tsb.create({
-        target: 'es5',
-        module: 'commonjs',
-        outDir: paths.out,
-        sourceMap: true,
-        declaration: false,
-        noEmitOnError: false,
-        removeComments: false
-    }, false, null, function(error){handleBuildError(error)});
+    return tsb.create('tsconfig.json', false, null, function(error){handleBuildError(error)});
 }
 
 function logBuildResult(){
@@ -72,6 +67,54 @@ gulp.task('ci', ['test'], function() {
     return gulp.watch(paths.src, ['test']);
 });
 
+gulp.task('pre-coverage', ['build'], function () {
+    logBuildResult();
+    if(buildDone) {
+        console.log(chalk.blue('Preparing coverage', paths.test));
+        return gulp.src(paths.out + '/src/progress.js')
+            .pipe(istanbul({includeUntested: true}))
+            .pipe(istanbul.hookRequire());
+    }
+});
+
+gulp.task('coverage', ['pre-coverage'], function () {
+    if(buildDone) {
+        console.log(chalk.blue('Running tests with coverage in', paths.test));
+        return gulp.src(paths.test, {read: false})
+            .pipe(mocha({reporter: 'spec'}))
+            .pipe(istanbul.writeReports({
+                dir: paths.coverage,
+                reporters: [ 'lcov' ],
+                reportOpts: { dir: paths.coverage}
+            }));
+    }
+});
+
+
+gulp.task('coveralls', ['coverage'], function() {
+    if(buildDone) {
+        console.log(chalk.blue('Exporting lcov.info to coveralls.io'));
+        return gulp.src(paths.coverage + '/**/lcov.info')
+            .pipe(coveralls());
+    }
+});
+
+gulp.task('appveyor', ['build'], function() {
+    logBuildResult();
+    if(buildDone){
+        console.log(chalk.blue('Running tests in', paths.test));
+        return gulp.src(paths.test, {read: false})
+            .pipe(mocha({
+                reporter: "mocha-jenkins-reporter",
+                reporterOptions: {
+                    "junit_report_name": "ts-progress",
+                    "junit_report_path": paths.coverage + "/JUnit.xml",
+                    "junit_report_stack": 1
+                }
+            }));
+    }
+});
+
 gulp.task('package_definition', function() {
     return gulp.src("./package.json")
         .pipe(jeditor(function(json) {
@@ -83,7 +126,7 @@ gulp.task('package_definition', function() {
 });
 
 gulp.task('package_copy', function() {
-    return gulp.src([paths.out + '/**/*.js', './README.md', './src/ts-progress.d.ts']).pipe(gulp.dest(paths.publish));
+    return gulp.src([paths.out + '/src/**/*.js', './README.md', './src/ts-progress.d.ts']).pipe(gulp.dest(paths.publish));
 });
 
 gulp.task('package_npm', function() {

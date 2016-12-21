@@ -27,13 +27,13 @@ class Progress{
      * @param options
      * @returns {Progress}
      */
-    public static create(options: IProgressOptions): Progress{
+    public static create(options: ProgressOptions): Progress{
         return new Progress(options.total, options.pattern, options.textColor, options.title, options.updateFrequency | 0)
     }
 
     /**
      *
-     * @deprecated use Progress.create(options: IProgressOptions)
+     * @deprecated use Progress.create(options: ProgressOptions)
      */
     constructor(private _total: number, pattern?: string, private _textColor?: string, private _title?: string, private _updateFrequency = 0){
         this._padding = new Array(300).join(' ');
@@ -48,14 +48,17 @@ class Progress{
      */
     public update(){
         this._now = new Date().getTime();
-        charm.up(1).erase('line').write("\r");
-        if(this._current >= this._total - 1){
+        if(this._current == this._total){
+            return;
+        }else if(this._current >= this._total - 1){
+            charm.up(1).erase('line').write("\r");
             this._current = (this._total - 1);
             this.stop();
         }else{
             this._current++;
             this._percent += this._percentIncrease;
             if(!this.skipStep()){
+                charm.up(1).erase('line').write("\r");
                 this._elapsed = (this._now - this._start)/1000;
                 this._remaining  = (this._elapsed/this._current * (this._total - this._current));
                 this.write();

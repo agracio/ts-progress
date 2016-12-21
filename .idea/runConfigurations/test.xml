@@ -1,0 +1,26 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="test" type="mocha-javascript-test-runner" factoryName="Mocha" activateToolWindowBeforeRun="false">
+    <node-interpreter>project</node-interpreter>
+    <node-options />
+    <working-directory>$PROJECT_DIR$</working-directory>
+    <pass-parent-env>true</pass-parent-env>
+    <envs />
+    <ui>bdd</ui>
+    <extra-mocha-options />
+    <test-kind>DIRECTORY</test-kind>
+    <test-directory>$PROJECT_DIR$/lib/test</test-directory>
+    <recursive>false</recursive>
+    <method>
+      <option name="GulpBeforeRunTask" enabled="true">
+        <node-interpreter>project</node-interpreter>
+        <node-options />
+        <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+        <tasks>
+          <task>build</task>
+        </tasks>
+        <arguments />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>

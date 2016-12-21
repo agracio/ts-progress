@@ -1,4 +1,4 @@
-interface IProgressOptions{
+interface ProgressOptions{
     total: number,
     pattern?: string,
     textColor?: string,
@@ -30,7 +30,7 @@ declare module "ts-progress"{
          * @param options {IProgressOptions}
          * @returns {Progress}
          */
-        create(options: IProgressOptions): Progress
+        create(options: ProgressOptions): Progress
     };
     export = progress;
 }
