@@ -8,6 +8,6 @@ cache:
     - node_modules
 before_script:
   - npm install -g gulp --silent
-script: "npm test"
+script: "gulp coveralls"
 notifications:
   email: false
