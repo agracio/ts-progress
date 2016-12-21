@@ -16,7 +16,7 @@ install:
 test_script:
   - node --version
   - npm --version
-  - npm appveyor
+  - gulp appveyor
 
 after_test:
   - ps: |

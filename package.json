@@ -5,9 +5,7 @@
   "main": "src/progress.ts",
   "scripts": {
     "build": "gulp build",
-    "ci": "gulp ci",
-    "test": "gulp build && node dist/example.js",
-    "appveyor": "gulp appveyor"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
