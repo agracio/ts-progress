@@ -78,6 +78,46 @@ describe('Progress', () => {
 
     });
 
+    it('unsupported token', function() {
+
+        let stdout = helper([], () =>{
+            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent} · {token}'});
+            progress.update();
+        });
+
+        expect(stdout.length).equal(2);
+        expect(stdout[0]).equal('bar:                      · 0% · token');
+        expect(stdout[1]).equal('\rbar:                      · 100% · token');
+
+    });
+
+    it('customised token', function() {
+
+        let stdout = helper([], () =>{
+            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}'});
+            progress.update();
+        });
+
+        expect(stdout.length).equal(2);
+        expect(stdout[0]).equal('bar:                      · 0%');
+        expect(stdout[1]).equal('\rbar:                      · 100%');
+
+    });
+
+    it('text', function() {
+
+        let stdout = helper([], () =>{
+            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}', textColor: 'blue'});
+            progress.update();
+        });
+
+        expect(stdout.length).equal(2);
+        expect(stdout[0]).equal('bar:                      · 0%');
+        expect(stdout[1]).equal('\rbar:                      · 100%');
+
+    });
+
+
     it('memory', function() {
 
         let stdout = helper([], () =>{

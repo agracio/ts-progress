@@ -105,6 +105,7 @@ gulp.task('remap', ['istanbul'], function () {
 
 gulp.task('coverage', ['remap'], function () {
     if(buildDone) {
+        del(paths.coverage + '/coverage-final.json');
         return gulp.src('./')
             .pipe(run('istanbul report lcov'))
     }
@@ -120,9 +121,6 @@ gulp.task('coveralls-export', function() {
 
 gulp.task('coveralls', function() {
     return sequence('coverage', 'coveralls-export')
-    if(buildDone) {
-
-    }
 });
 
 gulp.task('appveyor', ['build'], function() {
