@@ -28,7 +28,7 @@ class Progress{
      * @returns {Progress}
      */
     public static create(options: ProgressOptions): Progress{
-        return new Progress(options.total, options.pattern, options.textColor, options.title, options.updateFrequency | 0)
+        return new Progress(options.total, options.pattern, options.textColor, options.title, options.updateFrequency)
     }
 
     /**

@@ -9,6 +9,7 @@ var bump = require('gulp-bump');
 var sequence = require('run-sequence');
 var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
+var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 
 var buildDone = false;
 
@@ -77,18 +78,49 @@ gulp.task('pre-coverage', ['build'], function () {
     }
 });
 
-gulp.task('coverage', ['pre-coverage'], function () {
+gulp.task('istanbul', ['pre-coverage'], function () {
     if(buildDone) {
         console.log(chalk.blue('Running tests with coverage in', paths.test));
         return gulp.src(paths.test, {read: false})
             .pipe(mocha({reporter: 'spec'}))
             .pipe(istanbul.writeReports({
                 dir: paths.coverage,
-                reporters: [ 'lcov' ],
+                reporters: [ 'json' ],
                 reportOpts: { dir: paths.coverage}
             }));
     }
 });
+
+gulp.task('remap', ['istanbul'], function () {
+    if(buildDone) {
+        return gulp.src(paths.coverage + '/coverage-final.json')
+            .pipe(remapIstanbul({
+                reports: {
+                    'json':paths.coverage + '/coverage.json',
+                    //'html': 'html-report'
+                }
+            }));
+    }
+});
+
+gulp.task('coverage', ['remap'], function () {
+    if(buildDone) {
+        del(paths.coverage + '/coverage-final.json');
+        run('istanbul report lcov').exec();
+    }
+});
+
+// gulp.task('coverage', ['remap'], function () {
+//     if(buildDone) {
+//         del(paths.coverage + '/coverage-final.json');
+//         return gulp.src('./', {read: false, base: '.'})
+//             .pipe(istanbul.writeReports({
+//                 dir: paths.coverage,
+//                 reporters: [ 'lcov' ],
+//                 reportOpts: { dir: paths.coverage}
+//             }));
+//     }
+// });
 
 
 gulp.task('coveralls', ['coverage'], function() {

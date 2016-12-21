@@ -1,5 +1,6 @@
 # ts-progress
 
+[![Coverage Status](https://coveralls.io/repos/github/agracio/ts-progress/badge.svg?branch=master)](https://coveralls.io/github/agracio/ts-progress?branch=master)
 [![Dependencies](https://david-dm.org/agracio/ts-progress.svg)](https://david-dm.org/agracio/ts-progress#info=dependencies)
 [![img](https://david-dm.org/agracio/ts-progress/dev-status.svg)](https://david-dm.org/agracio/ts-progress/#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/agracio/ts-progress/badge.svg)](https://snyk.io/test/github/agracio/ts-progress)

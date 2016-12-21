@@ -53,9 +53,8 @@
     "gulp-run": "^1.7.1",
     "gulp-tsb": "2.0.3",
     "mocha-jenkins-reporter": "^0.3.3",
+    "remap-istanbul": "^0.8.3",
     "run-sequence": "^1.2.2",
-    "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0",
     "typescript": "^2.1.4"
   }
 }

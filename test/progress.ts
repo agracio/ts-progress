@@ -32,7 +32,21 @@ function filterStdout(stdout): string[]{
 
 }
 
+var memoryUsage = process.memoryUsage;
+
 describe('Progress', () => {
+
+    before(function(): any {
+        process.memoryUsage = () =>{return {
+            rss: 20*1024*1024,
+            heapTotal: 0,
+            heapUsed: 0,
+        }}
+    });
+
+    after(function(): any {
+        process.memoryUsage = memoryUsage
+    });
 
     it('default', function() {
 
@@ -61,6 +75,32 @@ describe('Progress', () => {
         expect(stdout[0]).equal('bar:                      · 0.0s · 0.0s · 0% · 0/2');
         expect(stdout[1]).equal('\rbar:                      · 0.0s · 0.0s · 50% · 1/2');
         expect(stdout[2]).equal('\rbar:                      · 0.0s · 0.0s · 100% · 2/2');
+
+    });
+
+    it('memory', function() {
+
+        let stdout = helper([], () =>{
+            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {memory}'});
+            progress.update();
+        });
+
+        expect(stdout.length).equal(2);
+        expect(stdout[0]).equal('bar:                      · 20.0M');
+        expect(stdout[1]).equal('\rbar:                      · 20.0M');
+
+    });
+
+    it('bar', function() {
+
+        let stdout = helper([], () =>{
+            let progress = Progress.create({total: 1, pattern: 'bar: {bar.white.green.25} · {percent}'});
+            progress.update();
+        });
+
+        expect(stdout.length).equal(2);
+        expect(stdout[0]).equal('bar:                           · 0%');
+        expect(stdout[1]).equal('\rbar:                           · 100%');
 
     });
 
