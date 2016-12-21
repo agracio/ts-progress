@@ -96,7 +96,7 @@ gulp.task('remap', ['istanbul'], function () {
         return gulp.src(paths.coverage + '/coverage-final.json')
             .pipe(remapIstanbul({
                 reports: {
-                    'json':paths.coverage + '/coverage.json',
+                    'json': paths.coverage + '/coverage.json',
                     //'html': 'html-report'
                 }
             }));
@@ -105,29 +105,23 @@ gulp.task('remap', ['istanbul'], function () {
 
 gulp.task('coverage', ['remap'], function () {
     if(buildDone) {
-        del(paths.coverage + '/coverage-final.json');
-        run('istanbul report lcov').exec();
+        return gulp.src('./')
+            .pipe(run('istanbul report lcov'))
     }
 });
 
-// gulp.task('coverage', ['remap'], function () {
-//     if(buildDone) {
-//         del(paths.coverage + '/coverage-final.json');
-//         return gulp.src('./', {read: false, base: '.'})
-//             .pipe(istanbul.writeReports({
-//                 dir: paths.coverage,
-//                 reporters: [ 'lcov' ],
-//                 reportOpts: { dir: paths.coverage}
-//             }));
-//     }
-// });
-
-
-gulp.task('coveralls', ['coverage'], function() {
+gulp.task('coveralls-export', function() {
     if(buildDone) {
         console.log(chalk.blue('Exporting lcov.info to coveralls.io'));
         return gulp.src(paths.coverage + '/**/lcov.info')
             .pipe(coveralls());
+    }
+});
+
+gulp.task('coveralls', function() {
+    return sequence('coverage', 'coveralls-export')
+    if(buildDone) {
+
     }
 });
 
