@@ -111,7 +111,7 @@ gulp.task('coverage', ['remap'], function () {
     }
 });
 
-gulp.task('coveralls-export', function() {
+gulp.task('coveralls', function() {
     if(buildDone) {
         console.log(chalk.blue('Exporting lcov.info to coveralls.io'));
         return gulp.src(paths.coverage + '/**/lcov.info')
@@ -119,9 +119,10 @@ gulp.task('coveralls-export', function() {
     }
 });
 
-gulp.task('coveralls', function() {
-    return sequence('coverage', 'coveralls-export')
+gulp.task('coverage-export', function() {
+    return sequence('coverage', 'coveralls')
 });
+
 
 gulp.task('appveyor', ['build'], function() {
     logBuildResult();

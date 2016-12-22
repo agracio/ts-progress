@@ -8,6 +8,6 @@ cache:
     - node_modules
 before_script:
   - npm install -g gulp istanbul --silent
-script: "gulp coveralls"
+script: "gulp coverage-export"
 notifications:
   email: false
