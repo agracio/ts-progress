@@ -1,5 +1,4 @@
 {
-    "version": "2.1.0",
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
@@ -9,17 +8,14 @@
         "noEmitOnError": false,
         "removeComments": false
     },
-    "filesGlob": [
-        "./**/*.ts",
-        "./typings/index.d.ts",
-        "!./node_modules/**/*"
+    "include": [
+        "./src/*.ts",
+        "./test/*.ts",
+        "./typings/index.d.ts"
     ],
-    "files": [
-
+    "exclude": [
+        "node_modules"
     ],
     "compileOnSave": false,
-    "buildOnSave": false,
-    "atom": {
-        "rewriteTsconfig": true
-    }
+    "buildOnSave": false
 }
