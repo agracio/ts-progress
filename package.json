@@ -1,6 +1,6 @@
 {
   "name": "ts-progress",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
   "main": "src/progress.ts",
   "scripts": {
@@ -52,8 +52,8 @@
     "gulp-mocha": "^3.0.1",
     "gulp-run": "^1.7.1",
     "gulp-tsb": "2.0.3",
-    "mocha-jenkins-reporter": "^0.3.3",
-    "remap-istanbul": "^0.8.3",
+    "mocha-jenkins-reporter": "^0.3.5",
+    "remap-istanbul": "^0.8.4",
     "run-sequence": "^1.2.2",
     "typescript": "^2.1.4"
   }
