@@ -32,7 +32,7 @@ function filterStdout(stdout): string[]{
 
 }
 
-var memoryUsage = process.memoryUsage;
+let memoryUsage = process.memoryUsage;
 
 describe('Progress', () => {
 

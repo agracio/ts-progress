@@ -19,15 +19,10 @@ interface Progress{
 }
 
 declare module "ts-progress"{
-    var progress: {
-        /**
-         * @deprecated use Progress.create(options: IProgressOptions)
-         */
-        new (total: number, pattern?: string, textColor?: string, title?: string, updateFrequency?: number): Progress;
-
+    let progress: {
         /**
          * Creates new progress bar object
-         * @param options {IProgressOptions}
+         * @param options {ProgressOptions}
          * @returns {Progress}
          */
         create(options: ProgressOptions): Progress

@@ -20,7 +20,7 @@ class Progress{
     private _padding: string;
 
     private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}';
-    private  _regex = /(.*?){(.*?)}/g;
+    private _regex = /(.*?){(.*?)}/g;
 
     /**
      * Creates new progress object
@@ -46,7 +46,7 @@ class Progress{
     /**
      * Updates progress
      */
-    public update(){
+    public update(): void{
         this._now = new Date().getTime();
         if(this._current == this._total){
             return;
@@ -69,14 +69,14 @@ class Progress{
     /**
      * Finishes progress
      */
-    public done(){
+    public done(): void{
         this._now = new Date().getTime();
         charm.up(1).erase('line').write("\r");
         this._current = (this._total - 1);
         this.stop();
     }
 
-    private start = () =>{
+    private start = (): void =>{
         charm.erase('line').write("\r");
         this._start = new Date().getTime();
         this._now = new Date().getTime();
@@ -85,7 +85,7 @@ class Progress{
         this.write();
     };
 
-    private stop = () =>{
+    private stop = (): void =>{
         this._current++;
         this._percent = 100;
         this._elapsed = (this._now - this._start)/1000;
@@ -93,9 +93,8 @@ class Progress{
         this.write();
     };
 
-    private write = () =>{
+    private write = (): void =>{
 
-        //charm.up(1).erase('line').write("\r");
         let match;
         while (match = this._regex.exec(this._pattern)) {
 
@@ -116,31 +115,31 @@ class Progress{
         charm.write("\r\n");
     };
 
-    private renderElapsed = (color?: string) => {
+    private renderElapsed = (color?: string): void => {
         this.renderItem(`${this._elapsed.toFixed(1)}s`, color);
     };
 
-    private renderRemaining = (color?: string) => {
+    private renderRemaining = (color?: string): void => {
         this.renderItem(`${this._remaining.toFixed(1)}s`, color);
     };
 
-    private renderMemory = (color?: string) => {
+    private renderMemory = (color?: string): void => {
         this.renderItem(`${(process.memoryUsage().rss/1024/1024).toFixed(1)}M`, color);
     };
 
-    private renderPercent = (color?: string) => {
+    private renderPercent = (color?: string): void => {
         this.renderItem(`${this._percent.toFixed(0)}%`, color);
     };
 
-    private renderCurrent = (color?: string) => {
+    private renderCurrent = (color?: string): void => {
         this.renderItem(this._current.toString(), color);
     };
 
-    private renderTotal = (color?: string) => {
+    private renderTotal = (color?: string): void => {
         this.renderItem(this._total.toString(), color);
     };
 
-    private renderBar = (colorRemaining: string = 'white', colorDone: string = 'green', size?: number) => {
+    private renderBar = (colorRemaining: string = 'white', colorDone: string = 'green', size?: number): void => {
 
         if(size && size !== this._barSize) this._barSize = size;
         charm.foreground(colorDone).background(colorDone);
@@ -163,7 +162,7 @@ class Progress{
         'total': this.renderTotal,
     };
 
-    private renderPattern = (pattern: string, item: string, color?: string) => {
+    private renderPattern = (pattern: string, item: string, color?: string): void => {
         let renderer = this._patternMapping[item];
         if(renderer) {
             renderer(color);
@@ -172,11 +171,15 @@ class Progress{
         }
     };
 
-    private renderItem = (item: string, color?: string) => {
-        if(color) charm.foreground(color).write(item).display('reset'); else charm.write(item);
+    private renderItem = (item: string, color?: string): void => {
+        if(color){
+            charm.foreground(color).write(item).display('reset');
+        }else{
+            charm.write(item);
+        }
     };
 
-    private renderText = (text: string) =>{
+    private renderText = (text: string): void =>{
         if(this._textColor){
             charm.display('bright').foreground(this._textColor).write(text).display('reset');
         }else{
@@ -184,14 +187,14 @@ class Progress{
         }
     };
 
-    private renderTitle = () => {
+    private renderTitle = (): void => {
         if(this._title && this._title !== '') {
             charm.display('bright').write(this._title).display('reset');
             charm.write("\n");
         }
     };
 
-    private skipStep(): boolean{
+    private skipStep = (): boolean =>{
 
         if(this._updateFrequency == 0) return false;
         let elapsed = this._now - this._cycle;
