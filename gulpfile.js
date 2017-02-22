@@ -130,8 +130,8 @@ gulp.task('appveyor', ['build'], function() {
         console.log(chalk.blue('Running tests in', paths.test));
         return gulp.src(paths.test, {read: false})
             .pipe(mocha({
-                'reporter': "mocha-jenkins-reporter",
-                'reporterOptions': {
+                reporter: "mocha-jenkins-reporter",
+                reporterOptions: {
                     "junit_report_name": "ts-progress",
                     "junit_report_path": paths.coverage + "/JUnit.xml",
                     "junit_report_stack": 1
