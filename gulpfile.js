@@ -175,4 +175,3 @@ gulp.task('pack', function() {
 gulp.task('publish', function() {
     sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_npm', 'package_bump');
 });
-
