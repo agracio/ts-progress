@@ -55,9 +55,9 @@
     "gulp-mocha": "3.0.1",
     "gulp-run": "^1.7.1",
     "gulp-tsb": "^2.0.3",
-    "mocha-jenkins-reporter": "^0.3.7",
+    "mocha-jenkins-reporter": "^0.3.8",
     "remap-istanbul": "^0.9.5",
     "run-sequence": "^1.2.2",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.2"
   }
 }
