@@ -7,7 +7,8 @@ cache:
   directories:
     - node_modules
 install:
-  - npm install -g gulp istanbul --silent
+  - npm install -g gulp istanbul
+  - npm install
 script: "gulp coverage-export"
 notifications:
   email: false
