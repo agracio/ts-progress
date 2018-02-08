@@ -6,3 +6,4 @@ lib/
 coverage/
 publish/
 .idea/workspace.xml
+*.tgz
