@@ -11,7 +11,7 @@ node_js:
 
 install:
   - npm install -g -q gulp istanbul &> /dev/null
-  - npm install -q
+  - npm install -q --unsafe-perm=true
 
 script: "gulp coverage-export"
 

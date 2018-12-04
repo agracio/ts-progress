@@ -27,4 +27,13 @@ after_test:
       $file = '.\coverage\JUnit.xml'
       (New-Object 'System.Net.WebClient').UploadFile($url, (Resolve-Path $file))
 
+skip_commits:
+  files:
+    - .idea/*
+    - '**/*.md'
+    - '**/*.d.ts'
+    - '**/*.gif'
+    - '**/*.png'
+    - '.travis.yml'
+
 build: off
