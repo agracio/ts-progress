@@ -1,22 +1,23 @@
+image:
+  - Visual Studio 2015
+  - Ubuntu
+
 environment:
   matrix:
     # node.js
-    - nodejs_version: "6"
-    - nodejs_version: "7"
-    - nodejs_version: "8"
-    - nodejs_version: "9"
+    - nodejs: "6"
+    - nodejs: "8"
+    - nodejs: "10"
+    - nodejs: "11"
 
 install:
-  - ps: Install-Product node $env:nodejs_version
-  - npm install -g gulp --silent
-  - npm install --silent
-
-#build_script:
-#  - gulp build
+  - cmd: powershell Install-Product node $env:nodejs x64
+  - sh: nvm install $nodejs
+  - node -p "[process.version,process.arch].join(' ')"
+  - npm install -g -q gulp
+  - npm install -q --unsafe-perm=true
 
 test_script:
-  - node --version
-  - npm --version
   - gulp appveyor
 
 after_test:
