@@ -14,7 +14,8 @@ install:
   - cmd: powershell Install-Product node $env:nodejs x64
   - sh: nvm install $nodejs
   - node -p "[process.version,process.arch].join(' ')"
-  - npm install -g -q gulp
+  - cmd: npm install -g -q gulp >nul
+  - sh: npm install -g -q gulp &> /dev/null
   - npm install -q --unsafe-perm=true
 
 test_script:

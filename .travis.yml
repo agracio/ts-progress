@@ -10,8 +10,8 @@ node_js:
   - "11"
 
 install:
-  - npm install -g gulp istanbul
-  - npm install
+  - npm install -g -q gulp istanbul &> /dev/null
+  - npm install -q
 
 script: "gulp coverage-export"
 
