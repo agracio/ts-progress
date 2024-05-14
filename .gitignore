@@ -7,5 +7,4 @@ coverage/
 publish/
 .idea/workspace.xml
 *.tgz
-/package-lock.json
 .idea
