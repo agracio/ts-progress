@@ -5,7 +5,6 @@ image:
 
 environment:
   matrix:
-    # node.js
     - nodejs: "20"
 
 install:
@@ -36,3 +35,6 @@ skip_commits:
     - .gitignore
 
 build: off
+
+cache:
+  - node_modules -> package.json

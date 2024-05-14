@@ -3,7 +3,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/wbk31bj66di1qrk5?svg=true)](https://ci.appveyor.com/project/agracio/ts-progress)
 [![Coverage Status](https://coveralls.io/repos/github/agracio/ts-progress/badge.svg?branch=master)](https://coveralls.io/github/agracio/ts-progress?branch=master)
 
-> Flexible node progress bar for Windows/macOS/Linux
+### Flexible node progress bar for Windows/macOS/Linux
+
 
 ![image](https://github.com/agracio/ts-progress/raw/master/screenshot.gif)
  
@@ -44,6 +45,7 @@ Updates progress.
 Finishes progress regardless of progress stage. Optional.
  
 ## Options
+
 Progress bar accepts the following options on initialisation: 
 * `total: number` - Total number of items to process.
 * `pattern: string` - Optional layout pattern, defaults to '*Progress: {bar} | Elapsed: {elapsed} | {percent}*'. See [Patterns](#patterns)
@@ -100,8 +102,8 @@ The following tokens are supported:
 * `{total}` - total items.
 
 ### Token customisation
-Tokens can be customised to define color for each token. 
-Progress bar  token accepts two colors for remaining/done items as well as length.
+Tokens can be customized to define a color for each token. 
+Progress bar token accepts two colors for remaining/done items as well as length.
 
 Usage for all tokens except progress bar:
 * `{token.color}`
@@ -114,6 +116,7 @@ var progress = Progress.create({total:50, pattern: 'Progress: {bar.white.red.10}
 ```
 
 ## Colors
+
 Progress bar uses [charm](https://www.npmjs.com/package/charm) to render elements and supports charm string colors:
 * `red`
 * `yellow`
