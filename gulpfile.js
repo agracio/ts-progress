@@ -6,10 +6,10 @@ var chalk = require('chalk');
 var run = require('gulp-run');
 var jeditor = require("gulp-json-editor");
 var bump = require('gulp-bump');
-var sequence = require('run-sequence');
 var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
 var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
+const sequence = require('gulp4-run-sequence');
 
 var buildDone = false;
 
@@ -43,16 +43,16 @@ gulp.task('build', function() {
         .pipe(gulp.dest(paths.out));
 });
 
-gulp.task('test', ['build'], function() {
+gulp.task('test', gulp.series('build', function() {
     logBuildResult();
-    if(buildDone){
+    //if(buildDone){
         console.log(chalk.blue('Running tests in', paths.test));
         return gulp.src(paths.test, {read: false})
             .pipe(mocha({
                 reporter: 'spec'
             }));
-    }
-});
+    //}
+}));
 
 gulp.task('package_clean', function() {
     var clean = [paths.publish + '/**/*'];
@@ -60,15 +60,15 @@ gulp.task('package_clean', function() {
     return del(clean);
 });
 
-gulp.task('cb', ['build'], function() {
+gulp.task('cb', gulp.series('build', function() {
     return gulp.watch(paths.src, ['build']);
-});
+}));
 
-gulp.task('ci', ['test'], function() {
+gulp.task('ci', gulp.series('test'), function() {
     return gulp.watch(paths.src, ['test']);
 });
 
-gulp.task('pre-coverage', ['build'], function () {
+gulp.task('pre-coverage', gulp.series('build', function () {
     logBuildResult();
     if(buildDone) {
         console.log(chalk.blue('Preparing coverage', paths.test));
@@ -76,9 +76,9 @@ gulp.task('pre-coverage', ['build'], function () {
             .pipe(istanbul({includeUntested: true}))
             .pipe(istanbul.hookRequire());
     }
-});
+}));
 
-gulp.task('istanbul', ['pre-coverage'], function () {
+gulp.task('istanbul', gulp.series('pre-coverage', function () {
     if(buildDone) {
         console.log(chalk.blue('Running tests with coverage in', paths.test));
         return gulp.src(paths.test, {read: false})
@@ -89,9 +89,9 @@ gulp.task('istanbul', ['pre-coverage'], function () {
                 reportOpts: { dir: paths.coverage}
             }));
     }
-});
+}));
 
-gulp.task('remap', ['istanbul'], function () {
+gulp.task('remap', gulp.series('istanbul', function () {
     if(buildDone) {
         return gulp.src(paths.coverage + '/coverage-final.json')
             .pipe(remapIstanbul({
@@ -101,15 +101,15 @@ gulp.task('remap', ['istanbul'], function () {
                 }
             }));
     }
-});
+}));
 
-gulp.task('coverage', ['remap'], function () {
+gulp.task('coverage', gulp.series('remap', function () {
     if(buildDone) {
         del(paths.coverage + '/coverage-final.json');
         return gulp.src('./')
             .pipe(run('istanbul report lcov'))
     }
-});
+}));
 
 gulp.task('coveralls', function() {
     if(buildDone) {
@@ -124,7 +124,7 @@ gulp.task('coverage-export', function() {
 });
 
 
-gulp.task('appveyor', ['build'], function() {
+gulp.task('appveyor', gulp.series('build', function() {
     logBuildResult();
     if(buildDone){
         console.log(chalk.blue('Running tests in', paths.test));
@@ -138,12 +138,12 @@ gulp.task('appveyor', ['build'], function() {
                 }
             }));
     }
-});
+}));
 
 gulp.task('package_definition', function() {
     return gulp.src("./package.json")
         .pipe(jeditor(function(json) {
-            json.devDependencies = "";
+            json.devDependencies = {};
             json.main = 'progress.js';
             return json;
         }))
@@ -151,7 +151,7 @@ gulp.task('package_definition', function() {
 });
 
 gulp.task('package_copy', function() {
-    return gulp.src([paths.out + '/src/**/*.js', './README.md', './src/ts-progress.d.ts']).pipe(gulp.dest(paths.publish));
+    return gulp.src(['./lib/src/example.js', './lib/src/progress.js', './README.md', './LICENSE', './ts-progress.d.ts']).pipe(gulp.dest(paths.publish));
 });
 
 gulp.task('package_npm', function() {
@@ -172,6 +172,6 @@ gulp.task('pack', function() {
     sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_pack');
 });
 
-gulp.task('publish', function() {
-    sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_npm', 'package_bump');
-});
+// gulp.task('publish', function() {
+//     sequence('build', 'package_clean', 'package_copy', 'package_definition', 'package_npm', 'package_bump');
+// });

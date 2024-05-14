@@ -1,14 +1,12 @@
 image:
   - Visual Studio 2015
   - Ubuntu
+  - macos-monterey
 
 environment:
   matrix:
     # node.js
-    - nodejs: "6"
-    - nodejs: "8"
-    - nodejs: "10"
-    - nodejs: "11"
+    - nodejs: "20"
 
 install:
   - cmd: powershell Install-Product node $env:nodejs x64
@@ -34,6 +32,6 @@ skip_commits:
     - '**/*.d.ts'
     - '**/*.gif'
     - '**/*.png'
-    - '.travis.yml'
+    - 'LICENSE'
 
 build: off

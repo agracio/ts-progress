@@ -31,11 +31,7 @@ class Progress{
         return new Progress(options.total, options.pattern, options.textColor, options.title, options.updateFrequency)
     }
 
-    /**
-     *
-     * @deprecated use Progress.create(options: ProgressOptions)
-     */
-    constructor(private _total: number, pattern?: string, private _textColor?: string, private _title?: string, private _updateFrequency = 0){
+    private constructor(private _total: number, pattern?: string, private _textColor?: string, private _title?: string, private _updateFrequency = 0){
         this._padding = new Array(300).join(' ');
         if(pattern) this._pattern = pattern;
         //this._padding = new Array(300).join('▒');
