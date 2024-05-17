@@ -144,6 +144,7 @@ gulp.task('package_definition', function() {
     return gulp.src("./package.json")
         .pipe(jeditor(function(json) {
             json.devDependencies = {};
+            json.scripts = {};
             json.main = 'progress.js';
             return json;
         }))

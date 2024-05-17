@@ -1,8 +1,9 @@
 {
   "name": "ts-progress",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
   "main": "src/progress.ts",
+  "types": "ts-progress.d.ts",
   "engines": {
     "node": ">=4"
   },
@@ -12,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/agracio/ts-progress.git"
+    "url": "git+https://github.com/agracio/ts-progress.git"
   },
   "keywords": [
     "node-progress",
@@ -34,7 +35,6 @@
     "console progress",
     "console progress bar"
   ],
-  "author": "Antonas Graciovas",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/agracio/ts-progress/issues"
