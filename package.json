@@ -35,6 +35,7 @@
     "console progress",
     "console progress bar"
   ],
+  "author": "agracio",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/agracio/ts-progress/issues"

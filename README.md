@@ -1,6 +1,6 @@
 # ts-progress
 
-[![Build status](https://ci.appveyor.com/api/projects/status/wbk31bj66di1qrk5?svg=true)](https://ci.appveyor.com/project/agracio/ts-progress)
+[![Actions Status][github-img]][github-url]
 [![Coverage Status](https://coveralls.io/repos/github/agracio/ts-progress/badge.svg?branch=master)](https://coveralls.io/github/agracio/ts-progress?branch=master)
 
 ### Flexible node progress bar for Windows/macOS/Linux
@@ -126,6 +126,9 @@ Progress bar uses [charm](https://www.npmjs.com/package/charm) to render element
 * `magenta`
 * `black`
 * `white`
+
+[github-img]: https://github.com/agracio/ts-progress/workflows/Test/badge.svg
+[github-url]: https://github.com/agracio/edge-js/ts-progress/workflows/main.yml
 
 
 

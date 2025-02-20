@@ -7,12 +7,12 @@ const interval = 100;
 
 function withDefaultSettings(){
     let progress = Progress.create({total: items});
-    runProgress(progress, withDone);
+    run(progress, withDone);
 }
 
 function withPattern(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar} | Elapsed: {elapsed} | Remaining: {remaining} | {percent} | {current}/{total}'});
-    runProgress(progress, withPatternAndColors);
+    run(progress, withPatternAndColors);
 }
 
 function withDone(){
@@ -38,15 +38,15 @@ function withUpdate(){
 
 function withPatternAndColors(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}'});
-    runProgress(progress, withTitle);
+    run(progress, withTitle);
 }
 
 function withTitle(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}', title: 'Doing some work'});
-    runProgress(progress);
+    run(progress);
 }
 
-function runProgress(progress: Progress, continueWith?: Function){
+function run(progress: Progress, continueWith?: Function){
     let count = 0;
     let iv: any = setInterval(function () {
         count++;
