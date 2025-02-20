@@ -3,18 +3,19 @@
         "target": "es5",
         "module": "commonjs",
         "outDir": "./lib",
+        "lib": ["es6"],
         "sourceMap": true,
         "declaration": false,
         "noEmitOnError": false,
-        "removeComments": false
+        "removeComments": false,
+//        "typeRoots": [
+//            "node_modules/@types",
+//        ]
     },
     "include": [
         "./src/*.ts",
         "./test/*.ts",
-        "./typings/index.d.ts"
-    ],
-    "exclude": [
-        "node_modules"
+        "./ts-progress.d.ts",
     ],
     "compileOnSave": false,
     "buildOnSave": false

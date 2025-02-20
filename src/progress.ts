@@ -8,7 +8,7 @@ class Progress{
     private _barSize: number = 20;
 
     private _percent: number = 0;
-    private _percentIncrease: number = 0;
+    private readonly _percentIncrease: number = 0;
     private _current: number = 0;
 
     private _start: number = 0;
@@ -19,7 +19,7 @@ class Progress{
 
     private _padding: string;
 
-    private _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}';
+    private readonly _pattern: string = 'Progress: {bar} | Elapsed: {elapsed} | {percent}';
     private _regex = /(.*?){(.*?)}/g;
 
     /**
@@ -120,7 +120,7 @@ class Progress{
     };
 
     private renderMemory = (color?: string): void => {
-        this.renderItem(`${(process.memoryUsage().rss/1024/1024).toFixed(1)}M`, color);
+        this.renderItem(`${(process.memoryUsage.rss()/1024/1024).toFixed(1)}M`, color);
     };
 
     private renderPercent = (color?: string): void => {
@@ -141,10 +141,10 @@ class Progress{
         charm.foreground(colorDone).background(colorDone);
         let done = Math.ceil(((this._current / this._total) * this._barSize));
 
-        charm.write(this._padding.substr(0, done));
+        charm.write(this._padding.substring(0, done));
 
         charm.foreground(colorRemaining).background(colorRemaining);
-        charm.write(this._padding.substr(0, this._barSize - done));
+        charm.write(this._padding.substring(0, this._barSize - done));
         charm.display('reset');
     };
 

@@ -1,17 +1,18 @@
 'use strict';
 
 const Progress = require('./progress');
+
 const items = 10;
 const interval = 100;
 
 function withDefaultSettings(){
     let progress = Progress.create({total: items});
-    run(progress, withDone);
+    runProgress(progress, withDone);
 }
 
 function withPattern(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar} | Elapsed: {elapsed} | Remaining: {remaining} | {percent} | {current}/{total}'});
-    run(progress, withPatternAndColors);
+    runProgress(progress, withPatternAndColors);
 }
 
 function withDone(){
@@ -37,15 +38,15 @@ function withUpdate(){
 
 function withPatternAndColors(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}'});
-    run(progress, withTilte);
+    runProgress(progress, withTitle);
 }
 
-function withTilte(){
+function withTitle(){
     let progress = Progress.create({total: items, pattern: 'Progress: {bar.white.cyan.25} | Elapsed: {elapsed.green} | Remaining: {remaining.blue} | {percent.magenta} | {current.red}/{total.yellow}', title: 'Doing some work'});
-    run(progress);
+    runProgress(progress);
 }
 
-function run(progress, continueWith?: Function){
+function runProgress(progress: Progress, continueWith?: Function){
     let count = 0;
     let iv: any = setInterval(function () {
         count++;
@@ -56,6 +57,6 @@ function run(progress, continueWith?: Function){
             if(continueWith) continueWith();
         }
     }, interval);
-
 }
+
 withDefaultSettings();

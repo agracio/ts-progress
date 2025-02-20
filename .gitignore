@@ -6,5 +6,6 @@ lib/
 coverage/
 publish/
 .idea/workspace.xml
+.idea/*theme*.xml
+.idea/*compiler*.xml
 *.tgz
-.idea
