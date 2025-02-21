@@ -1,10 +1,10 @@
 # ts-progress
 
 [![Actions Status][github-img]][github-url]
-[![Coverage Status](https://coveralls.io/repos/github/agracio/ts-progress/badge.svg?branch=master)](https://coveralls.io/github/agracio/ts-progress?branch=master)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9fbdcefd231248ca8712499f71ff0bfb)](https://app.codacy.com/gh/agracio/ts-progress/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/9fbdcefd231248ca8712499f71ff0bfb)](https://app.codacy.com/gh/agracio/ts-progress/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 ### Flexible node progress bar for Windows/macOS/Linux
-
 
 ![image](https://github.com/agracio/ts-progress/raw/master/screenshot.gif)
  
