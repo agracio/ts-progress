@@ -202,7 +202,7 @@ class Progress{
             this._cycle = this._now;
             return false;
         }
-    }
+    };
 }
 
 //export = Progress

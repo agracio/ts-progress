@@ -3,6 +3,7 @@ src/**/*.js
 src/**/*.map
 coverage.json
 lib/
+dist/
 coverage/
 publish/
 .idea/workspace.xml

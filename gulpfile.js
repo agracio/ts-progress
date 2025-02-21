@@ -6,11 +6,11 @@ const path = require("path");
 
 const paths = {
     src: ['src/**', 'test/**', './*.ts'],
-    out: './lib',
-    test: './lib/test/**/*.js',
+    out: './dist',
+    test: './dist/test/**/*.js',
     publish: './publish',
     coverage: './coverage',
-    copy: ['./LICENSE', './README.md', './lib/src/example.js', './lib/src/progress.js', './ts-progress.d.ts'],
+    copy: ['./LICENSE', './README.md', './dist/src/example.js', './dist/src/progress.js', './ts-progress.d.ts'],
 };
 
 function run(cmd, onClose){

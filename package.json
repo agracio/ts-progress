@@ -2,14 +2,14 @@
   "name": "ts-progress",
   "version": "0.2.0",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
-  "main": "lib/src/progress.js",
+  "main": "dist/src/progress.js",
   "types": "ts-progress.d.ts",
   "engines": {
     "node": ">=4"
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && jest --coverage"
+    "test": "npm run build && jest"
   },
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@
     "chalk": "^4.1.2",
     "gulp": "^5.0.0",
     "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.7.3"
   }
 }

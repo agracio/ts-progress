@@ -3,7 +3,7 @@ const Progress = require('../src/progress');
 
 process.setMaxListeners(0);
 
-function helper(stdout: any, fn: Function) {
+const helper = (stdout: any, fn: Function): string[] => {
     const original = process.stdout.write;
 
     function restore() {
@@ -20,15 +20,13 @@ function helper(stdout: any, fn: Function) {
     restore();
 
     return filterStdout(stdout);
-}
+};
 
-function filterStdout(stdout: any): string[]{
+const filterStdout = (stdout: any): string[] => {
     return stdout.filter((str: any) =>{
         return typeof str !== 'object'
     }).join('').trim().split('\r\n');
-}
-
-//class Mem implements NodeJS.
+};
 
 describe("Progress", () => {
 
