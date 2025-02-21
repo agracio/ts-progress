@@ -1,6 +1,6 @@
 const { series } = require('gulp');
 const { exec } = require('child_process');
-const { readdirSync, rmSync, copyFileSync } = require('fs');
+const { readdirSync, rmSync, copyFileSync, readFileSync, writeFileSync } = require('fs');
 const chalk = require('chalk');
 const path = require("path");
 
@@ -10,7 +10,7 @@ const paths = {
     test: './lib/test/**/*.js',
     publish: './publish',
     coverage: './coverage',
-    copy: ['./LICENSE', './README.md', './lib/src/example.js', './lib/src/progress.js', './package.json', './ts-progress.d.ts'],
+    copy: ['./LICENSE', './README.md', './lib/src/example.js', './lib/src/progress.js', './ts-progress.d.ts'],
 };
 
 function run(cmd, onClose){
@@ -43,9 +43,21 @@ function clean(cb) {
 
 function copy(cb) {
     paths.copy.forEach(f => copyFileSync(`${f}`, `${paths.publish}/${path.basename(f)}`));
+    let json = JSON.parse(readFileSync('package.json', 'utf8'));
+    json.main = 'progress.js';
+    writeFileSync(`${paths.publish}/package.json`,  JSON.stringify(json, null, 2), 'utf8');
     cb();
 }
 
+function pack(cb) {
+    run('npm pack ' + paths.publish, cb)
+}
+
+function publish(cb) {
+    run('npm publish ' + paths.publish, cb)
+}
+
+exports.copy = series(clean, build, copy);
+exports.pack = series(copy, pack);
 exports.clean = clean;
-exports.copy = copy;
 

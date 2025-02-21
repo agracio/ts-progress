@@ -4,7 +4,7 @@ const Progress = require('../src/progress');
 process.setMaxListeners(0);
 
 function helper(stdout: any, fn: Function) {
-    let original = process.stdout.write;
+    const original = process.stdout.write;
 
     function restore() {
         process.stdout.write = original;
@@ -33,8 +33,8 @@ function filterStdout(stdout: any): string[]{
 describe("Progress", () => {
 
     test('default', () => {
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 2});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 2});
             progress.update();
             progress.update();
         });
@@ -47,8 +47,8 @@ describe("Progress", () => {
 
     test('pattern', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 2, pattern: 'bar: {bar} · {elapsed} · {remaining} · {percent} · {current}/{total}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 2, pattern: 'bar: {bar} · {elapsed} · {remaining} · {percent} · {current}/{total}'});
             progress.update();
             progress.update();
         });
@@ -62,8 +62,8 @@ describe("Progress", () => {
 
     test('unsupported token', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent} · {token}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent} · {token}'});
             progress.update();
         });
 
@@ -75,8 +75,8 @@ describe("Progress", () => {
 
     test('customised token', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}'});
             progress.update();
         });
 
@@ -88,8 +88,8 @@ describe("Progress", () => {
 
     test('text', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}', textColor: 'blue'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'bar: {bar} · {percent.green}', textColor: 'blue'});
             progress.update();
         });
 
@@ -101,11 +101,11 @@ describe("Progress", () => {
 
     test('memory', function() {
 
-        let rss = process.memoryUsage.rss();
+        const rss = process.memoryUsage.rss();
         process.memoryUsage.rss = () => { return 20*1024*1024 }
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'bar: {bar} · {memory}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'bar: {bar} · {memory}'});
             progress.update();
         });
 
@@ -118,8 +118,8 @@ describe("Progress", () => {
 
     test('bar', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'bar: {bar.white.green.25} · {percent}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'bar: {bar.white.green.25} · {percent}'});
             progress.update();
         });
 
@@ -131,8 +131,8 @@ describe("Progress", () => {
 
     test('title', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'progress · {bar} · {percent}', title: 'title'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'progress · {bar} · {percent}', title: 'title'});
             progress.update();
         });
 
@@ -144,8 +144,8 @@ describe("Progress", () => {
 
     test('update frequency', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 2, pattern: 'progress · {bar} · {percent}', updateFrequency: 100});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 2, pattern: 'progress · {bar} · {percent}', updateFrequency: 100});
             progress.update();
             progress.update();
         });
@@ -158,8 +158,8 @@ describe("Progress", () => {
 
     test('update', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 1, pattern: 'progress · {bar} · {percent}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 1, pattern: 'progress · {bar} · {percent}'});
             progress.update();
             progress.update();
             progress.update();
@@ -175,8 +175,8 @@ describe("Progress", () => {
 
     test('done', function() {
 
-        let stdout = helper([], () =>{
-            let progress = Progress.create({total: 2, pattern: 'progress · {bar} · {percent}'});
+        const stdout = helper([], () =>{
+            const progress: Progress = Progress.create({total: 2, pattern: 'progress · {bar} · {percent}'});
             progress.done();
         });
 
@@ -185,5 +185,4 @@ describe("Progress", () => {
         expect(stdout[1]).toBe('\rprogress ·                      · 100%');
 
     });
-
 });

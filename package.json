@@ -2,7 +2,7 @@
   "name": "ts-progress",
   "version": "0.2.0",
   "description": "Flexible node progress bar for Windows/macOS/Linux.",
-  "main": "src/progress.ts",
+  "main": "lib/src/progress.js",
   "types": "ts-progress.d.ts",
   "engines": {
     "node": ">=4"

@@ -8,9 +8,6 @@
         "declaration": false,
         "noEmitOnError": false,
         "removeComments": false,
-//        "typeRoots": [
-//            "node_modules/@types",
-//        ]
     },
     "include": [
         "./src/*.ts",

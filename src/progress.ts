@@ -1,6 +1,7 @@
 'use strict';
 
-let charm = require('charm')();
+const charm = require('charm')();
+
 charm.pipe(process.stdout);
 
 class Progress{
@@ -91,7 +92,7 @@ class Progress{
 
     private write = (): void =>{
 
-        let match;
+        let match: any;
         while (match = this._regex.exec(this._pattern)) {
 
             this.renderText(match[1]);
@@ -99,7 +100,7 @@ class Progress{
             if(match[2].indexOf('.') == -1){
                 this.renderPattern(match[2], match[2]);
             }else{
-                let tokens = match[2].split('.');
+                const tokens = match[2].split('.');
                 if(tokens.length == 4 && tokens[0] == 'bar'){
                     this.renderBar(tokens[1], tokens[2], tokens[3])
                 }else if(tokens.length == 2){
@@ -139,7 +140,7 @@ class Progress{
 
         if(size && size !== this._barSize) this._barSize = size;
         charm.foreground(colorDone).background(colorDone);
-        let done = Math.ceil(((this._current / this._total) * this._barSize));
+        const done = Math.ceil(((this._current / this._total) * this._barSize));
 
         charm.write(this._padding.substring(0, done));
 
@@ -159,7 +160,7 @@ class Progress{
     };
 
     private renderPattern = (pattern: string, item: string, color?: string): void => {
-        let renderer = this._patternMapping[item];
+        const renderer = this._patternMapping[item];
         if(renderer) {
             renderer(color);
         }else{
@@ -193,7 +194,7 @@ class Progress{
     private skipStep = (): boolean =>{
 
         if(this._updateFrequency == 0) return false;
-        let elapsed = this._now - this._cycle;
+        const elapsed = this._now - this._cycle;
 
         if(elapsed < this._updateFrequency){
             return true;
