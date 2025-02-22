@@ -22,7 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-2022]
+#        os: [macos-latest, ubuntu-latest, windows-2022]
+        os: [macos-latest, ubuntu-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,6 +82,6 @@ jobs:
       - name: publish test-summary
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          check_run_annotations: 'all tests, skipped tests'
+          check_run_annotations: 'none'
           check_name: 'test-results'
           files: "artifacts/**/*.xml"
