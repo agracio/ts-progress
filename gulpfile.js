@@ -58,6 +58,7 @@ function publish(cb) {
 }
 
 exports.copy = series(clean, build, copy);
-exports.pack = series(copy, pack);
+exports.pack = series(clean, build, copy, pack);
+exports.publish = series(clean, build, copy, publish);
 exports.clean = clean;
 
