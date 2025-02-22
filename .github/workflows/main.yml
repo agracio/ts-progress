@@ -53,7 +53,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results (ts-progress ${{ matrix.os }})
+          name: test-summary (ts-progress ${{ matrix.os }})
           path: coverage/junit.xml
 
       - name: Run codacy-coverage-reporter
@@ -62,8 +62,8 @@ jobs:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/lcov.info
 
-  publish-test-results:
-    name: "publish test-results"
+  publish-test-summary:
+    name: "publish test-summary"
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -78,8 +78,9 @@ jobs:
         with:
           path: artifacts
 
-      - name: publish test-results
+      - name: publish test-summary
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
+          check_run_annotations: 'all tests, skipped tests'
           check_name: 'test-results'
           files: "artifacts/**/*.xml"
