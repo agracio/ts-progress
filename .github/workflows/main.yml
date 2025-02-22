@@ -53,7 +53,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Test Results (ts-progress ${{ matrix.os }})
+          name: test-results (ts-progress ${{ matrix.os }})
           path: coverage/junit.xml
 
       - name: Run codacy-coverage-reporter
@@ -63,20 +63,12 @@ jobs:
           coverage-reports: coverage/lcov.info
 
   publish-test-results:
-    name: "Publish Tests Results"
+    name: "publish test-results"
     needs: test
     runs-on: ubuntu-latest
     permissions:
       checks: write
 
-#      # only needed unless run with comment_mode: off
-#      pull-requests: write
-#
-#      # only needed for private repository
-#      contents: read
-#
-#      # only needed for private repository
-#      issues: read
     if: always()
 
     steps:
